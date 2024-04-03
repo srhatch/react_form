@@ -14,6 +14,7 @@ export interface ErrorObject {
     emailFormatError?: string;
     passwordLengthError?: string;
     passwordMatchError?: string;
+    stateMissing?: string;
 }
 
 // Defines the value property of the form context
