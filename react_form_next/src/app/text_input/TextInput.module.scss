@@ -1,0 +1,32 @@
+$hover-outline-color: rgb(135, 135, 255);
+$border-settings: 1px solid lightgray;
+.textInputDiv {
+    position: relative;
+}
+.inputLabel {
+    display: block;
+    margin: 0em 0em 0.25em 0.25em;
+    width: 85%;
+}
+.textInput {
+    display: block;
+    width: 100%;
+    padding: 0.5em 1em;
+    border-radius: 0.25em;
+    border: $border-settings;
+    &:hover {
+        box-shadow: 0.2px 0.2px 5px 0.1px $hover-outline-color,
+            -0.2px -0.2px 5px 0.1px $hover-outline-color;
+        border: 1px solid transparent;
+    }
+}
+.textInput_error {
+    border: 1px solid rgb(255, 47, 47) !important;
+}
+.textInputErrorMsg {
+    position: absolute;
+    font-size: 0.75rem;
+    top: 5em;
+    left: 1em;
+    width: 15.5em;
+}
