@@ -1,0 +1,59 @@
+$item-border-color: rgb(135, 135, 255);
+$list-border-color: rgb(192, 192, 192);
+$border-settings: 1px solid lightgray;
+.dropdownContainer {
+    position: relative;
+    display: block;
+    width: 10em;
+}
+.dropdownLabel {
+    display: block;
+    width: 85%;
+    margin: 0em 0em 0.25em 0.75em;
+}
+.dropdownInput {
+    display: block;
+    width: 100%;
+    padding: 0.5em 1.25em;
+    border-radius: 0.25em;
+    border: $border-settings;
+    &:hover {
+        box-shadow: 0.2px 0.2px 5px 0.1px $item-border-color,
+            -0.2px -0.2px 5px 0.1px $item-border-color;
+        border: 1px solid transparent;
+    }
+}
+.dropdownList {
+    position: absolute;
+    left: 0.75em;
+    top: 2.85em;
+    z-index: 1;
+    width: 85%;
+    margin: 0em;
+    padding: 0em;
+    background-color: white;
+    border-left: 1px solid $list-border-color;
+    border-bottom: 1px solid $list-border-color;
+    border-right: 1px solid $list-border-color;
+    list-style: none;
+}
+.itemButton {
+    font-size: 0.75rem;
+    background-color: white;
+    display: block;
+    width: 100%;
+    text-align: left;
+    outline: none;
+    border: 1px solid transparent;
+    &:hover {
+        border: 1px solid $item-border-color;
+    }
+    &:focus {
+        border: 0.5px solid $item-border-color;
+    }
+}
+.incorrectInputErrorMsg {
+    position: absolute;
+    font-size: 0.75rem;
+    left: 1em;
+}
