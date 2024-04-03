@@ -24,11 +24,23 @@ export interface ValidatingFormProps {
     initValues?: InputValues;
 }
 
-// Properties for the TextInput component
-export interface TextInputProps {
+// Base interface for repeated component props.
+export interface ComponentProps {
     componentName: string; // determines component-specific classNames
     inputFor: string; // determines input-specific label text, classNames, and name attribute
+    errorFor: string; // determines displayed error text and acts as a flag to show other UI error markers
+}
+
+export interface TextInputProps extends ComponentProps {
     inputMode: "email" | "search" | "none" | "text" | "tel" | "url" | "numeric" | "decimal" | undefined;
     isPassword?: boolean;
-    errorFor: string; // determines displayed error text and acts as a flag to show other UI error markers
+}
+
+export interface DropdownInputProps extends ComponentProps {
+    items: string[];
+    labelText: string;
+}
+
+export interface DropdownSelectProps extends ComponentProps {
+    items: string[]
 }
