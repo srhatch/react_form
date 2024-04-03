@@ -1,95 +1,72 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
+import styles from './Register.module.scss';
+import { useState } from 'react';
+import { InputValues, ErrorObject } from '../interfaces';
+import { states } from '../stateList'; // Prop value for dropdown list
+import ValidatingForm from './form_context/page';
+import TextInput from './text_input/page';
+import DropdownInput from './dropdown_input/page';
 
-export default function Home() {
+// Also used in FormContext component
+export const inputValuesInit = {
+  username: '',
+  email: '',
+  password: '',
+  passwordConfirm: '',
+  place: '',
+  state: ''
+}
+
+export default function Register() {
+  const [formValues, setFormValues] = useState<InputValues>(inputValuesInit);
+  const [errorObj, setErrorObj] = useState<ErrorObject>({});
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+    <ValidatingForm setParentValues={setFormValues}>
+      <form className={styles.registerForm}>
+        <TextInput
+          componentName='register'
+          inputFor='username'
+          inputMode='text'
+          isPassword={false}
+          errorFor={errorObj.usernameFormatError ?? ''}
         />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
+        <TextInput
+          componentName='register'
+          inputFor='email'
+          inputMode='email'
+          isPassword={false}
+          errorFor={errorObj.emailFormatError ?? ''}
+        />
+        <TextInput
+          componentName='register'
+          inputFor='password'
+          inputMode='text'
+          isPassword={true}
+          errorFor={errorObj.passwordLengthError ?? ''}
+        />
+        <TextInput
+          componentName='register'
+          inputFor='passwordConfirm'
+          inputMode='text'
+          isPassword={true}
+          errorFor={errorObj.passwordMatchError ?? ''}
+        />
+        <TextInput
+          componentName='register'
+          inputFor='place'
+          inputMode='text'
+          isPassword={false}
+          errorFor=''
+        />
+        <DropdownInput
+          componentName='register'
+          inputFor='state'
+          items={states}
+          errorFor={errorObj.stateMissing ?? ''}
+          labelText='State'
+        />
+      </form>
+    </ValidatingForm>
+  )
 }
