@@ -1,0 +1,35 @@
+$outline-color: rgb(135, 135, 255);
+:root {
+  box-sizing: border-box;
+}
+*,
+::before,
+::after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+}
+
+:focus {
+  outline: none;
+  box-shadow: 0 0 1px 2px $outline-color !important;
+}
+
+/* This file is used to position elements within the form */
+.register_usernameInputContainer {
+  width: 14em;
+}
+.register_emailInputContainer {
+  width: 14em;
+}
+.register_passwordInputContainer {
+  width: 14em;
+}
+.register_passwordConfirmInputContainer {
+  width: 14em;
+}
+.register_placeInputContainer {
+  width: 14em;
+}
