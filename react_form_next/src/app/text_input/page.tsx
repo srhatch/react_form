@@ -1,4 +1,4 @@
-import styles from './TextInput.module.css'; // For text input styles
+import styles from './TextInput.module.scss'; // For text input styles
 import { useContext } from 'react';
 import { TextInputProps } from '../../interfaces';
 import { FormContext } from '../form_context/page';
