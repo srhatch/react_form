@@ -8,6 +8,7 @@ export interface InputValues {
     place: string;
     state: string;
     age: string;
+    dob: string;
 }
 
 export interface ErrorObject {
@@ -50,5 +51,9 @@ export interface DropdownFieldsetProps extends ComponentProps {
 
 export interface RadioInputProps extends ComponentProps {
     items: string[]; // Radio button choices
+    labelText: string;
+}
+
+export interface DateInputProps extends ComponentProps {
     labelText: string;
 }
