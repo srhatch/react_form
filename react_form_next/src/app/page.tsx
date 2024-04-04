@@ -6,6 +6,7 @@ import { states } from '../stateList'; // Prop value for dropdown list
 import ValidatingForm from './form_context/page';
 import TextInput from './text_input/page';
 import DropdownInput from './dropdown_input/page';
+import DropdownFieldset from './dropdown_fieldset/page';
 
 // Also used in FormContext component
 export const inputValuesInit = {
@@ -14,7 +15,8 @@ export const inputValuesInit = {
   password: '',
   passwordConfirm: '',
   place: '',
-  state: ''
+  state: '',
+  title: ''
 }
 
 export default function Register() {
@@ -65,6 +67,12 @@ export default function Register() {
           items={states}
           errorFor={errorObj.stateMissing ?? ''}
           labelText='State'
+        />
+        <DropdownFieldset
+          componentName='register'
+          inputFor='title'
+          items={['mr', 'ms']}
+          errorFor=''
         />
       </form>
     </ValidatingForm>
