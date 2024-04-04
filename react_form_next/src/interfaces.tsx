@@ -7,7 +7,7 @@ export interface InputValues {
     passwordConfirm: string;
     place: string;
     state: string;
-    title: string;
+    age: string;
 }
 
 export interface ErrorObject {
