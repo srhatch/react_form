@@ -17,7 +17,7 @@ export const inputValuesInit = {
   passwordConfirm: '',
   place: '',
   state: '',
-  title: '',
+  age: '',
   accountType: ''
 };
 
