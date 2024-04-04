@@ -106,7 +106,7 @@ export default function DropdownFieldset({ componentName, inputFor, items, error
                                         className={styles.itemButton}
                                         value={item}
                                         onClick={handleItemSelect}
-                                        onKeyDown={handleKeyPress}
+                                        onKeyDown={handleArrowNav}
                                     >{item}</button>
                                 </li>
                             )
