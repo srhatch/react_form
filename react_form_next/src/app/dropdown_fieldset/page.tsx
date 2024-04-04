@@ -1,6 +1,6 @@
 import styles from './DropdownFieldset.module.scss';
 import { DropdownFieldsetProps } from '../../interfaces';
-import { useState, useRef, useContext, useCallback } from 'react';
+import { useState, useRef, useContext, useCallback, useEffect } from 'react';
 import { FormContext } from '../form_context/page';
 
 export default function DropdownFieldset({ componentName, inputFor, items, errorFor, errorMsg }: DropdownFieldsetProps) {
