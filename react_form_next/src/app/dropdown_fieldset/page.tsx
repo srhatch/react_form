@@ -90,7 +90,11 @@ export default function DropdownFieldset({ componentName, inputFor, items, error
                     ref={menuButtonRef}
                     type='button'
                     className={ errorFor ? [styles.openMenuButton, styles.openMenuButton_error].join(' ') : styles.openMenuButton}
-                    onClick={handleOpenMenuClick}
+                    onKeyDown={(e) => {
+                        handleArrowNav(e);
+                        handleTabNav(e);
+                    }}
+                    onClick={handleMenuClick}
                 >{value || 'Select unit'}{errorFor ? ' *' : ''}</button>
                 {
                     !isListHidden &&
