@@ -1,0 +1,25 @@
+.dateInputDiv {
+    position: relative;
+    width: 7em;
+}
+.dateLabel {
+    display: block;
+    margin: 0em 0em 0.25em 0.75em;
+    width: 85%;
+}
+.dateInput {
+    width: 100%;
+    padding: 0.5em 1.25em;
+    border-radius: 1.25em;
+    border: var(--border-settings);
+    align-self: center;
+    justify-self: start;
+    &:hover {
+        box-shadow: 0.2px 0.2px 5px 0.1px var(--backgrounds-hovers-green),
+            -0.2px -0.2px 5px 0.1px var(--backgrounds-hovers-green);
+        border: 1px solid transparent;
+    }
+}
+.dateInput_error {
+    border: 1px solid red;
+}
