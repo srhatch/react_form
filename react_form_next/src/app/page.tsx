@@ -8,6 +8,7 @@ import TextInput from './text_input/page';
 import DropdownInput from './dropdown_input/page';
 import DropdownFieldset from './dropdown_fieldset/page';
 import RadioInput from './radio_input/page';
+import DateInput from './date_input/page';
 
 // Also used in FormContext component
 export const inputValuesInit = {
@@ -18,7 +19,8 @@ export const inputValuesInit = {
   place: '',
   state: '',
   age: '',
-  accountType: ''
+  accountType: '',
+  dob: ''
 };
 
 export default function Register() {
@@ -82,6 +84,12 @@ export default function Register() {
           inputFor='accountType'
           labelText='Account type'
           items={['basic', 'premium']}
+          errorFor=''
+        />
+        <DateInput
+          componentName='register'
+          inputFor='dob'
+          labelText='Date of birth'
           errorFor=''
         />
       </form>
