@@ -3,7 +3,7 @@ import { DropdownFieldsetProps } from '../../interfaces';
 import { useState, useRef, useContext, useCallback, useEffect } from 'react';
 import { FormContext } from '../form_context/page';
 
-export default function DropdownFieldset({ componentName, inputFor, items, errorFor, errorMsg }: DropdownFieldsetProps) {
+export default function DropdownFieldset({ componentName, inputFor, buttonText, items, errorFor, errorMsg }: DropdownFieldsetProps) {
     const [isListHidden, setIsListHidden] = useState(true);
     const menuButtonRef = useRef<HTMLButtonElement>(null);
     const itemListRef = useRef<HTMLUListElement>(null);
@@ -82,6 +82,7 @@ export default function DropdownFieldset({ componentName, inputFor, items, error
             if (!isListHidden) setIsListHidden(true);
         }
     }
+
     return (
         <div className={[styles.fieldsetContainer, `${componentName}-fieldsetContainer`].join(' ')}>
             <fieldset>
@@ -95,7 +96,7 @@ export default function DropdownFieldset({ componentName, inputFor, items, error
                         handleTabNav(e);
                     }}
                     onClick={handleMenuClick}
-                >{value || 'Select unit'}{errorFor ? ' *' : ''}</button>
+                >{value || buttonText}{errorFor ? ' *' : ''}</button>
                 {
                     !isListHidden &&
                     <ul ref={itemListRef} className={styles.itemList}>
