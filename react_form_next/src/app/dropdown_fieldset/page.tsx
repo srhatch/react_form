@@ -11,10 +11,11 @@ export default function DropdownFieldset({ componentName, inputFor, items, error
     const { getValue, setValue } = useContext(FormContext);
     const value = getValue(inputFor);
 
-    const cachedItemSelectEvent = useCallback(
+    const cachedClickCloseEvent = useCallback(
         (e: MouseEvent): void => {
-            if (!itemListRef.current?.contains(e.target as Node)) { 
+            if (!itemListRef.current?.contains(e.target as Node) && !menuButtonRef.current?.contains(e.target as Node)) { 
                     setIsListHidden(true);
+                    document.removeEventListener('click', cachedClickCloseEvent)
             }
         }, [itemListRef, setIsListHidden])
 
