@@ -54,47 +54,34 @@ export default function DropdownFieldset({ componentName, inputFor, items, error
         setIsListHidden(true);
     }
 
-    function handleKeyPress(e: React.KeyboardEvent) {
+    function handleArrowNav(e: React.KeyboardEvent<HTMLButtonElement>) {
         if (e.key === 'ArrowUp') {
             e.preventDefault();
-            if (listIndex.current > 0) {
+            if (listIndex.current > 0 ) {
+                // navigate list using listIndex
                 listIndex.current--;
-                (itemListRef.current?.children[listIndex.current]?.children[0] as HTMLElement).focus()
+                (itemListRef.current?.children[listIndex.current]?.children[0] as HTMLElement).focus();
             } else if (listIndex.current === 0) {
-                (menuButtonRef.current as HTMLElement).focus();
+                // Returns focus to the input element
+                menuButtonRef.current?.focus();
                 listIndex.current = -1;
             }
         } else if (e.key === 'ArrowDown') {
             e.preventDefault();
-            if ((listIndex.current + 1) < items.length) {
+            if (listIndex.current < items?.length - 1) {
+                // if list is open track navigation with listIndex
                 listIndex.current++;
                 (itemListRef.current?.children[listIndex.current]?.children[0] as HTMLElement).focus();
             }
         }
     }
-/*
-    function handleMenuButtonKeyDown(e: React.KeyboardEvent) {
-        if (e.key === 'Enter') {
-            listIndex.current = -1;
-        } else if (e.shiftKey && e.key === 'Tab') {
-            e.preventDefault();
-            // Navigate to the previous input element
-            setIsListHidden(true);
-            menuButtonRef.current.parentNode.parentNode.previousElementSibling.children[0].focus();
-        } else if (e.key === 'ArrowDown' || e.key === 'Tab') {
-            e.preventDefault();
-            if (isListHidden) {
-                // Sends focus to the next input i.e. minPrice
-                menuButtonRef.current.parentNode.parentNode.nextElementSibling.children[0].focus();
-            } else {
-                // navigate down list
-                listIndex.current++;
-                itemListRef.current?.children[listIndex.current]?.children[0].focus(); 
-            }
-        }        
-    }*/
-// error message is component specific so it can be positioned accordingly
 
+    function handleTabNav(e: React.KeyboardEvent<HTMLButtonElement>) {
+        // Tab navigation will put focus on previous or next element, so close the list if it's open
+        if ((e.shiftKey && e.key === 'Tab') || e.key === 'Tab') {
+            if (!isListHidden) setIsListHidden(true);
+        }
+    }
     return (
         <div className={[styles.fieldsetContainer, `${componentName}-fieldsetContainer`].join(' ')}>
             <fieldset>
