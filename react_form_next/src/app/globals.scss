@@ -11,6 +11,12 @@ $outline-color: rgb(135, 135, 255);
 body {
   margin: 0;
 }
+/* Reset default fieldset style */
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
 
 :focus {
   outline: none;
