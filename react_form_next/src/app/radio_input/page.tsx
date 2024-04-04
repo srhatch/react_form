@@ -3,14 +3,16 @@ import { RadioInputProps } from '../../interfaces';
 import { useContext, useState } from 'react'
 import { FormContext } from '../form_context/page';
 
-export default function RadioInput({ componentName, inputFor, items, errorFor }: RadioInputProps) {
+export default function RadioInput({ componentName, inputFor, labelText, items, errorFor }: RadioInputProps) {
     const [isSelected, setIsSelected] = useState<string>('');
     const { getValue, setValue } = useContext(FormContext);
 
-    // TODO: add label
     return (
         <div className={errorFor ? [styles.radioContainer, styles.radioContainer_error, `${componentName}-radioContainer`].join(' ') : [styles.radioContainer, `${componentName}-radioContainer`].join(' ')}>
             <fieldset>
+                <label className={styles.radioLabel} htmlFor={`${inputFor}-hiddenInput`}>
+                    {labelText}{errorFor ? ' *' : ''}
+                </label>
                 {
                     items?.map((item) => {
                         return (
