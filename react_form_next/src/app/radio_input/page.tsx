@@ -18,7 +18,7 @@ export default function RadioInput({ componentName, inputFor, labelText, items, 
                         return (
                             <button
                                 key={item}
-                                className={isSelected === item ? [styles.radioLabel, styles.selected].join(' ') : styles.radioLabel}
+                                className={isSelected === item ? [styles.radioButton, styles.selected].join(' ') : styles.radioButton}
                                 onClick={(e) => {
                                     e.preventDefault();
                                     setValue(inputFor, item);
