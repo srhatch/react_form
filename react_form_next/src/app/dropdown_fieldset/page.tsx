@@ -31,14 +31,16 @@ export default function DropdownFieldset({ componentName, inputFor, items, error
             }
         }, [itemListRef, setIsListHidden])
 
-    function handleOpenMenuClick(e: React.MouseEvent<HTMLButtonElement>) {
-        // cancel event so document event listener isn't triggered
-        if (isListHidden) {
-            e.stopPropagation();
-            setIsListHidden(false);
-            document.addEventListener('click', cachedItemSelectEvent, {once: true});
-            document.addEventListener('keydown', cachedEscCloseList);
-        }
+        useEffect(() => {
+            if (!isListHidden) {
+                document.addEventListener('click', cachedClickCloseEvent);
+                document.addEventListener('keydown', cachedEscCloseList);
+            }
+        }, [isListHidden])
+
+    function handleMenuClick(e: React.MouseEvent<HTMLButtonElement>) {
+            setIsListHidden(v => !v);
+            menuButtonRef.current?.focus(); // Default browser behavior drops focus on button clicks
     }
 
     function handleItemSelect(e: React.MouseEvent<HTMLButtonElement>) {
