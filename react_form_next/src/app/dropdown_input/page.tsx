@@ -22,7 +22,7 @@ export default function DropdownInput({ componentName, inputFor, items, errorFor
 
     const cachedEscCloseItemList = useCallback(
         // To make the menu close with Escape key
-        (e: KeyboardEvent) => {
+        (e: KeyboardEvent): void => {
             if (e.key === 'Escape') {
                 setIsListHidden(true);
                 document.removeEventListener('keydown', cachedEscCloseItemList);
@@ -86,6 +86,13 @@ export default function DropdownInput({ componentName, inputFor, items, errorFor
         }
     }
 
+    function handleTabNav(e: React.KeyboardEvent<HTMLInputElement>) {
+        // Tab navigation will put focus on previous or next element, so close the list if it's open
+        if ((e.shiftKey && e.key === 'Tab') || e.key === 'Tab') {
+            if (!isListHidden) setIsListHidden(true);
+        }
+    }
+
     return (
         <div className={[`${componentName}_${inputFor}InputDiv`, styles.dropdownContainer].join(' ')}>
             <label htmlFor={`${inputFor}Input-id`} className={styles.stateLabel}>
@@ -99,7 +106,10 @@ export default function DropdownInput({ componentName, inputFor, items, errorFor
                 name={inputFor}
                 value={value}
                 onChange={handleUserInput}
-                onKeyDown={handleArrowNav}
+                onKeyDown={(e) => {
+                    handleArrowNav(e);
+                    handleTabNav(e);
+                }}
                 onFocus={handleReopenList}
             />
             <ul ref={itemListRef} className={styles.dropdownList} hidden={isListHidden}>
