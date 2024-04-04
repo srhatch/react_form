@@ -60,7 +60,7 @@ export default function DropdownFieldset({ componentName, inputFor, buttonText, 
             if (listIndex.current > 0 ) {
                 // navigate list using listIndex
                 listIndex.current--;
-                (itemListRef.current?.children[listIndex.current]?.children[0] as HTMLElement).focus();
+                (itemListRef.current?.children[listIndex.current]?.firstElementChild as HTMLElement).focus();
             } else if (listIndex.current === 0) {
                 // Returns focus to the input element
                 menuButtonRef.current?.focus();
@@ -71,7 +71,7 @@ export default function DropdownFieldset({ componentName, inputFor, buttonText, 
             if (listIndex.current < items?.length - 1) {
                 // if list is open track navigation with listIndex
                 listIndex.current++;
-                (itemListRef.current?.children[listIndex.current]?.children[0] as HTMLElement).focus();
+                (itemListRef.current?.children[listIndex.current]?.firstElementChild as HTMLElement).focus();
             }
         }
     }
