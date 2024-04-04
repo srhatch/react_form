@@ -1,0 +1,59 @@
+$outline-color: rgb(135, 135, 255);
+$item-border-color: rgb(192, 192, 192);
+$border-settings: 1px solid lightgray;
+$transparent-border: 1px solid transparent;
+.fieldsetContainer {
+    position: relative;
+    width: 6.25em;
+}
+.openMenuButton {
+    font-size: 0.75rem;
+    width: 100%;
+    padding: 0.3125em;
+    background-color: white;
+    border: $border-settings;
+    border-radius: 0.3125em;
+    &:hover {
+        box-shadow: 0.2px 0.2px 5px 0.1px $outline-color,
+            -0.2px -0.2px 5px 0.1px $outline-color;
+        border: $transparent-border;
+        cursor: pointer;
+    }
+}
+.openMenuButton_error {
+    border: 1px solid red;
+}
+.itemList {
+    position: absolute;
+    z-index: 1;
+    left: 0.3em;
+    width: 90%;
+    margin: 0em;
+    padding: 0em;
+    border-left: 1px solid $item-border-color;
+    border-bottom: 1px solid $item-border-color;
+    border-right: 1px solid $item-border-color;
+    list-style: none;
+    > li {
+        width: 100%;
+    }
+}
+.itemButton {
+    display: block;
+    width: 100%;
+    background-color: white;
+    border: $transparent-border;
+    &:hover {
+        border: 1px solid $outline-color;
+    }
+    &:focus {
+        outline: none;
+        border: 1px solid $outline-color;
+    }
+}
+.errorMsg {
+    position: absolute;
+    font-size: 0.75rem;
+    left: 0.25em;
+    width: 8.25em;
+}
