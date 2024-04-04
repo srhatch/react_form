@@ -50,4 +50,5 @@ export interface DropdownFieldsetProps extends ComponentProps {
 
 export interface RadioInputProps extends ComponentProps {
     items: string[]; // Radio button choices
+    labelText: string;
 }
