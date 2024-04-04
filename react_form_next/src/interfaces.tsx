@@ -6,7 +6,8 @@ export interface InputValues {
     password: string;
     passwordConfirm: string;
     place: string;
-    state: string
+    state: string;
+    title: string;
 }
 
 export interface ErrorObject {
@@ -29,6 +30,7 @@ export interface ComponentProps {
     componentName: string; // determines component-specific classNames
     inputFor: string; // determines input-specific label text, classNames, and name attribute
     errorFor: string; // determines displayed error text and acts as a flag to show other UI error markers
+    errorMsg?: string; // Text display of client-side validation error
 }
 
 export interface TextInputProps extends ComponentProps {
@@ -41,6 +43,6 @@ export interface DropdownInputProps extends ComponentProps {
     labelText: string;
 }
 
-export interface DropdownSelectProps extends ComponentProps {
+export interface DropdownFieldsetProps extends ComponentProps {
     items: string[]
 }
