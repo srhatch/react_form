@@ -7,6 +7,7 @@ import ValidatingForm from './form_context/page';
 import TextInput from './text_input/page';
 import DropdownInput from './dropdown_input/page';
 import DropdownFieldset from './dropdown_fieldset/page';
+import RadioInput from './radio_input/page';
 
 // Also used in FormContext component
 export const inputValuesInit = {
@@ -16,8 +17,9 @@ export const inputValuesInit = {
   passwordConfirm: '',
   place: '',
   state: '',
-  title: ''
-}
+  title: '',
+  accountType: ''
+};
 
 export default function Register() {
   const [formValues, setFormValues] = useState<InputValues>(inputValuesInit);
@@ -72,6 +74,12 @@ export default function Register() {
           componentName='register'
           inputFor='title'
           items={['mr', 'ms']}
+          errorFor=''
+        />
+        <RadioInput
+          componentName='register'
+          inputFor='accountType'
+          items={['basic', 'premium']}
           errorFor=''
         />
       </form>
