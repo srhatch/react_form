@@ -72,7 +72,7 @@ export default function DropdownInput({ componentName, inputFor, items, errorFor
             if (listIndex.current > 0 ) {
                 // navigate list using listIndex
                 listIndex.current--;
-                (itemListRef.current?.children[listIndex.current]?.children[0] as HTMLElement).focus();
+                (itemListRef.current?.children[listIndex.current]?.firstElementChild as HTMLElement).focus();
             } else if (listIndex.current === 0) {
                 // Returns focus to the input element
                 inputRef.current?.focus();
@@ -83,7 +83,7 @@ export default function DropdownInput({ componentName, inputFor, items, errorFor
             if (listIndex.current < itemList?.length - 1) {
                 // if list is open track navigation with listIndex
                 listIndex.current++;
-                (itemListRef.current?.children[listIndex.current]?.children[0] as HTMLElement).focus();
+                (itemListRef.current?.children[listIndex.current]?.firstElementChild as HTMLElement).focus();
             }
         }
     }
