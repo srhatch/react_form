@@ -7,23 +7,33 @@ export interface InputValues {
     passwordConfirm: string;
     place: string;
     state: string;
-    age: string;
+    ageRange: string;
     dob: string;
 }
 
 export interface ErrorObject {
-    usernameFormatError?: string;
-    emailFormatError?: string;
-    passwordLengthError?: string;
-    passwordMatchError?: string;
-    stateMissing?: string;
+    [index: string]: any;
+    usernameFormatError?: boolean;
+    emailFormatError?: boolean;
+    passwordLengthError?: boolean;
+    passwordMatchError?: boolean;
+    incorrectDropdownInput?: boolean;
+    usernameMissing?: boolean;
+    emailMissing?: boolean;
+    passwordMissing?: boolean;
+    passwordConfirmMissing?: boolean;
+    placeMissing?: boolean;
+    stateMissing?: boolean;
+    ageRangeMissing?: boolean;
+    dobMissing?: boolean;
+    accountTypeMissing?: boolean;
 }
 
 // Defines the value property of the form context
 export interface ValidatingFormProps {
     children: React.ReactElement;
-    setParentValues: (inputObject: InputValues) => void;
-    initValues?: InputValues;
+    setParentValues: (inputObject: any) => void;
+    initValues: InputValues;
 }
 
 // Base interface for repeated component props.
