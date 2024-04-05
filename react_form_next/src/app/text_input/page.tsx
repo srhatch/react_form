@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { TextInputProps } from '../../interfaces';
 import { FormContext } from '../form_context/page';
 
-export default function TextInput({ componentName, inputFor, inputMode, isPassword, errorFor }: TextInputProps) {
+export default function TextInput({ componentName, inputFor, inputMode, isPassword, errorFor, errorMsg }: TextInputProps) {
     const baseIdentity = `${componentName}_${inputFor}`;
     const inputClass = generateInputClass(baseIdentity, errorFor);
     const labelText = generateLabelText(inputFor, errorFor);
@@ -30,12 +30,12 @@ export default function TextInput({ componentName, inputFor, inputMode, isPasswo
                 type={isPassword ? 'password' : 'text'}
                 onChange={handleInputChange}
             ></input>
-            {!!errorFor && <div className={styles.textInputErrorMsg}>{generateErrorText(errorFor)}</div>}
+            {errorFor && <div className={styles.textInputErrorMsg}>{errorMsg}</div>}
         </div>        
     )
 }
 
-function generateInputClass(baseIdentity: string, errorFor: string) {
+function generateInputClass(baseIdentity: string, errorFor: boolean) {
     const baseInputClass = 'textInput'; // Used for input component styling
     const componentSpecificClass = `${baseIdentity}Input`; // Used for global styling (mainly positioning on page)
     const classArray = [styles[baseInputClass], componentSpecificClass];
@@ -43,7 +43,7 @@ function generateInputClass(baseIdentity: string, errorFor: string) {
     return classArray.join(' ');
 }
 
-function generateLabelText(inputFor: string, errorFor: string) {
+function generateLabelText(inputFor: string, errorFor: boolean) {
     let labelText;
     switch(inputFor) {
         case 'username':
@@ -62,7 +62,7 @@ function generateLabelText(inputFor: string, errorFor: string) {
             labelText = 'City/town';
             break;
     }
-    if (errorFor) labelText + ' *'; // Provides a non-color visual to indicate an error
+    if (errorFor) labelText = labelText + ' *'; // Provides a non-color visual to indicate an error
     return labelText;
 }
 
@@ -73,13 +73,3 @@ function generateLabelClass(baseIdentity: string) {
     return classes;
 }
 
-function generateErrorText(errorFor:string) {
-    switch(errorFor) {
-        case 'usernameFormatError':
-            return 'Username cannot end with ".com"';
-        case 'emailFormatError':
-            return 'Email must be in correct format';
-        case 'passwordMatchError':
-            return 'Passwords must match';
-    }
-}
