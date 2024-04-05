@@ -3,7 +3,7 @@ import { DropdownInputProps } from '../../interfaces';
 import { useState, useRef, useContext, useCallback, useEffect } from 'react';
 import { FormContext } from '../form_context/page';
 
-export default function DropdownInput({ componentName, inputFor, items, errorFor, labelText }: DropdownInputProps) {
+export default function DropdownInput({ componentName, inputFor, items, errorFor, labelText, errorMsg }: DropdownInputProps) {
     const [isListHidden, setIsListHidden] = useState(true);
     const [itemList, setItemList] = useState<string[]>([]); // For filtering (and displaying) list items
     const itemListRef = useRef<HTMLUListElement>(null);
@@ -104,7 +104,7 @@ export default function DropdownInput({ componentName, inputFor, items, errorFor
                 ref={inputRef}
                 id={`${inputFor}Input-id`}
                 type="text"
-                className={errorFor ? [styles.dropdownInput, styles.textInput_error].join(' ') : styles.dropdownInput}
+                className={errorFor ? [styles.dropdownInput, styles.dropdownInput_error].join(' ') : styles.dropdownInput}
                 name={inputFor}
                 value={value}
                 onChange={handleUserInput}
@@ -126,7 +126,7 @@ export default function DropdownInput({ componentName, inputFor, items, errorFor
                     </li>
                 )}
             </ul>
-            {errorFor && <span className={styles.incorrectInputErrorMsg}>placeholder</span>}
+            {errorFor && <span className={styles.incorrectInputErrorMsg}>{ errorMsg }</span>}
         </div>
     )
 }
