@@ -6,6 +6,21 @@
   margin: 5em auto;
 
   > * + * {
-    margin-top: 1em;
+    margin-top: 1.5em;
   }
+}
+
+.submitButton {
+  text-decoration: none;
+    color: black;
+    text-align: center;
+    width: 8em;
+    padding: 1em;
+    background-color: rgb(184, 218, 229);
+    border: solid transparent 1px;
+    border-radius: 0.25em;
+    &:hover {
+        cursor: pointer;
+        border: 1px solid rgb(111, 199, 228);
+    }
 }
