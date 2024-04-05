@@ -9,7 +9,7 @@ export default function DropdownInput({ componentName, inputFor, items, errorFor
     const itemListRef = useRef<HTMLUListElement>(null);
     const inputRef = useRef<HTMLInputElement>(null); // Used to put back focus on input element
     const listIndex = useRef(-1); // For applying CSS styling to highlight the current focues (button) element
-    
+
     const { getValue, setValue } = useContext(FormContext);
     const value = getValue(inputFor);
 
@@ -114,7 +114,7 @@ export default function DropdownInput({ componentName, inputFor, items, errorFor
                 }}
                 onFocus={handleReopenList}
             />
-            <ul ref={itemListRef} className={styles.dropdownList} hidden={isListHidden}>
+            <ul ref={itemListRef} className={styles.dropdownList} hidden={itemList.length === 0 || isListHidden}>
                 {itemList?.map(item =>
                     <li key={item}>
                         <button
@@ -126,7 +126,7 @@ export default function DropdownInput({ componentName, inputFor, items, errorFor
                     </li>
                 )}
             </ul>
-            {errorFor && <span className={styles.incorrectInputErrorMsg}>{ errorMsg }</span>}
+            {(value.length > 0 && itemList.length === 0) && <div className={styles.incorrectInputErrorMsg}>{ errorMsg }</div>}
         </div>
     )
 }
