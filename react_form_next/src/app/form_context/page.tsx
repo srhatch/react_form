@@ -1,7 +1,6 @@
 'use client';
 import { createContext, useState, useEffect, useCallback } from 'react';
 import { ValidatingFormProps, InputValues } from '../../interfaces';
-import { inputValuesInit } from '../page';
 
 export const FormContext = createContext(Object.create({}));
 
@@ -9,7 +8,7 @@ export default function ValidatingForm({ children, setParentValues, initValues }
     // Takes in a setState function to pass values to its parent
     // Provides setter and getter functions to its children to updated the inputValues object
     // Wrap inputs in this form
-    const [inputValues, setInputValues] = useState<InputValues>(initValues ?? inputValuesInit);
+    const [inputValues, setInputValues] = useState<InputValues>(initValues);
 
     useEffect(() => {
       // Send inputObject to this components parent e.g. to send in fetch request
