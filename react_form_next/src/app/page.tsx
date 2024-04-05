@@ -86,7 +86,7 @@ export default function Register() {
           labelText='State'
           items={states}
           errorFor={(errorObj?.stateMissing || errorObj?.incorrectDropdownInput) ?? false}
-          errorMsg={errorObj?.stateMissing ? 'Please enter a valid state' : ''}
+          errorMsg='Please enter a valid state'
         />
         <DropdownFieldset
           componentName='register'
