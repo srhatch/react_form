@@ -36,11 +36,11 @@ export class RegisterModel implements InputValues {
     }
     checkMissing() {
         for (let prop in this) {
-            if (!this[prop]) this.errorObj[`${prop}Missing`] = true;
+            if (!this[prop]) this.errorObj[`${prop}Missing`] = `${prop}Missing`;
         }
     }
     checkUsernameFormat() {
-        if (this.username.endsWith('.com')) this.errorObj.usernameFormatError = true;
+        if (this.username.endsWith('.com')) this.errorObj.usernameFormatError = 'usernameFormatError';
     }
     checkEmailFormat() {
         // checks that an @ sign exists followed by at least one character
@@ -48,18 +48,18 @@ export class RegisterModel implements InputValues {
         if (this.email) {
             const emailRegex = /(.+)(@)(.+)(\.{1})(.{2,})$/;
             const isValid = emailRegex.test(this.email);
-            if (!isValid) this.errorObj.emailFormatError = true;
+            if (!isValid) this.errorObj.emailFormatError = 'emailFormatError';
         }
     }
     checkPasswordMatch() {
-        if (this.password !== this.passwordConfirm) this.errorObj.passwordMatchError = true;
+        if (this.password !== this.passwordConfirm) this.errorObj.passwordMatchError = 'passwordMatchError';
     }
     checkPasswordLength() {
-        if (this.password.length < 8) this.errorObj.passwordLengthError = true;
+        if (this.password && this.password.length < 8) this.errorObj.passwordLengthError = 'passwordLengthError';
     }
     checkDropdownInput(fullList: string[]) {
-        if (!fullList.includes(this.state)) {
-            this.errorObj.incorrectDropdownInput = true;
+        if (this.state && !fullList.includes(this.state)) {
+            this.errorObj.incorrectDropdownInput = 'incorrectDropdownInput';
         }
     }
     checkErrors(dropdownInputList: string[]) {
