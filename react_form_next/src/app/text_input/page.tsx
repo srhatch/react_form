@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { TextInputProps } from '../../interfaces';
 import { FormContext } from '../form_context/page';
 
-export default function TextInput({ componentName, inputFor, inputMode, isPassword, errorFor, errorMsg }: TextInputProps) {
+export default function TextInput({ componentName, inputFor, inputMode, isPassword, errorFor, errorMsg, dispatchError }: TextInputProps) {
     const baseIdentity = `${componentName}_${inputFor}`;
     const inputClass = generateInputClass(baseIdentity, errorFor);
     const labelText = generateLabelText(inputFor, errorFor);
@@ -12,6 +12,7 @@ export default function TextInput({ componentName, inputFor, inputMode, isPasswo
     const { getValue, setValue } = useContext(FormContext);
 
     function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+        if (errorFor) dispatchError?.({type: 'clearError', payload: errorFor});
         setValue(inputFor, e.target.value);
     }
 
@@ -35,7 +36,7 @@ export default function TextInput({ componentName, inputFor, inputMode, isPasswo
     )
 }
 
-function generateInputClass(baseIdentity: string, errorFor: boolean) {
+function generateInputClass(baseIdentity: string, errorFor: string) {
     const baseInputClass = 'textInput'; // Used for input component styling
     const componentSpecificClass = `${baseIdentity}Input`; // Used for global styling (mainly positioning on page)
     const classArray = [styles[baseInputClass], componentSpecificClass];
@@ -43,7 +44,7 @@ function generateInputClass(baseIdentity: string, errorFor: boolean) {
     return classArray.join(' ');
 }
 
-function generateLabelText(inputFor: string, errorFor: boolean) {
+function generateLabelText(inputFor: string, errorFor: string) {
     let labelText;
     switch(inputFor) {
         case 'username':
