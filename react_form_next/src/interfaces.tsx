@@ -13,20 +13,26 @@ export interface InputValues {
 
 export interface ErrorObject {
     [index: string]: any;
-    usernameFormatError?: boolean;
-    emailFormatError?: boolean;
-    passwordLengthError?: boolean;
-    passwordMatchError?: boolean;
-    incorrectDropdownInput?: boolean;
-    usernameMissing?: boolean;
-    emailMissing?: boolean;
-    passwordMissing?: boolean;
-    passwordConfirmMissing?: boolean;
-    placeMissing?: boolean;
-    stateMissing?: boolean;
-    ageRangeMissing?: boolean;
-    dobMissing?: boolean;
-    accountTypeMissing?: boolean;
+    usernameFormatError?: string;
+    emailFormatError?: string;
+    passwordLengthError?: string;
+    passwordMatchError?: string;
+    incorrectDropdownInput?: string;
+    usernameMissing?: string;
+    emailMissing?: string;
+    passwordMissing?: string;
+    passwordConfirmMissing?: string;
+    placeMissing?: string;
+    stateMissing?: string;
+    ageRangeMissing?: string;
+    dobMissing?: string;
+    accountTypeMissing?: string;
+}
+
+export interface ActionObject {
+    [index: string]: any;
+    type: string;
+    payload?: string | ErrorObject;
 }
 
 // Defines the value property of the form context
@@ -42,6 +48,7 @@ export interface ComponentProps {
     inputFor: string; // determines input-specific label text, classNames, and name attribute
     errorFor: string; // determines displayed error text and acts as a flag to show other UI error markers
     errorMsg?: string; // Text display of client-side validation error
+    dispatchError?: Function;
 }
 
 export interface TextInputProps extends ComponentProps {
