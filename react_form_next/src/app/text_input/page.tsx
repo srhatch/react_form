@@ -40,7 +40,7 @@ function generateInputClass(baseIdentity: string, errorFor: string) {
     const baseInputClass = 'textInput'; // Used for input component styling
     const componentSpecificClass = `${baseIdentity}Input`; // Used for global styling (mainly positioning on page)
     const classArray = [styles[baseInputClass], componentSpecificClass];
-    if (errorFor) classArray.push(styles.textInput_error); // Error styling
+    if (errorFor) classArray.push('errorOutline'); // Error styling
     return classArray.join(' ');
 }
 

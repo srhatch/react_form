@@ -15,7 +15,7 @@ export default function RadioInput({ componentName, inputFor, labelText, items, 
     }
 
     return (
-        <div className={errorFor ? [styles.radioContainer, styles.radioContainer_error, `${componentName}-radioContainer`].join(' ') : [styles.radioContainer, `${componentName}-radioContainer`].join(' ')}>
+        <div className={errorFor ? [styles.radioContainer, 'errorOutline', `${componentName}-radioContainer`].join(' ') : [styles.radioContainer, `${componentName}-radioContainer`].join(' ')}>
             <fieldset>
                 <label className={styles.radioLabel} htmlFor={`${inputFor}-hiddenInput`}>
                     {labelText}{errorFor ? ' *' : ''}

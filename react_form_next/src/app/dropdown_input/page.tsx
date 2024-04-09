@@ -105,7 +105,7 @@ export default function DropdownInput({ componentName, inputFor, items, errorFor
                 ref={inputRef}
                 id={`${inputFor}Input-id`}
                 type="text"
-                className={errorFor ? [styles.dropdownInput, styles.dropdownInput_error].join(' ') : styles.dropdownInput}
+                className={errorFor ? [styles.dropdownInput, 'errorOutline'].join(' ') : styles.dropdownInput}
                 name={inputFor}
                 value={value}
                 onChange={handleUserInput}

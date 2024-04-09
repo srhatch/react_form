@@ -91,7 +91,7 @@ export default function DropdownFieldset({ componentName, inputFor, buttonText, 
                 <button
                     ref={menuButtonRef}
                     type='button'
-                    className={ errorFor ? [styles.openMenuButton, styles.openMenuButton_error].join(' ') : styles.openMenuButton}
+                    className={ errorFor ? [styles.openMenuButton, 'errorOutline'].join(' ') : styles.openMenuButton}
                     onKeyDown={(e) => {
                         handleArrowNav(e);
                         handleTabNav(e);

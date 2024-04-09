@@ -4,7 +4,7 @@ import { ValidatingFormProps, InputValues } from '../../interfaces';
 
 export const FormContext = createContext(Object.create({}));
 
-export default function ValidatingForm({ children, setParentValues, initValues }: ValidatingFormProps) {
+export default function ValidatingFormContext({ children, setParentValues, initValues }: ValidatingFormProps) {
     // Takes in a setState function to pass values to its parent
     // Provides setter and getter functions to its children to updated the inputValues object
     // Wrap inputs in this form

@@ -47,7 +47,7 @@ export default function DateInput({ componentName, inputFor, labelText, errorFor
             >{labelText}{errorFor ? ' *' : ''}</label>
             <input
                 id={`${componentName}-${inputFor}Id`}
-                className={errorFor ? [styles.dateInput, styles.dateInput_error].join(' ') : styles.dateInput}
+                className={errorFor ? [styles.dateInput, 'errorOutline'].join(' ') : styles.dateInput}
                 type='text'
                 inputMode='numeric'
                 name={inputFor}

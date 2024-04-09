@@ -23,7 +23,11 @@ fieldset {
   box-shadow: 0 0 1px 2px $outline-color !important;
 }
 
-/* This file is used to position elements within the form */
+.errorOutline {
+  border: 1px solid red !important;
+}
+
+/* Component specific selectors are used to position elements within the form */
 .register_usernameInputContainer {
   width: 14em;
 }
