@@ -3,7 +3,7 @@ import { DropdownFieldsetProps } from '../../interfaces';
 import { useState, useRef, useContext, useCallback, useEffect } from 'react';
 import { FormContext } from '../form_context/page';
 
-export default function DropdownFieldset({ componentName, inputFor, buttonText, items, errorFor, errorMsg }: DropdownFieldsetProps) {
+export default function DropdownFieldset({ componentName, inputFor, buttonText, items, errorFor, errorMsg, dispatchError }: DropdownFieldsetProps) {
     const [isListHidden, setIsListHidden] = useState(true);
     const menuButtonRef = useRef<HTMLButtonElement>(null);
     const itemListRef = useRef<HTMLUListElement>(null);
@@ -44,6 +44,7 @@ export default function DropdownFieldset({ componentName, inputFor, buttonText, 
     }
 
     function handleItemSelect(e: React.MouseEvent<HTMLButtonElement>) {
+        if (errorFor) dispatchError?.({type: 'clearError', payload: errorFor});
         e.preventDefault();
         // event must be prevented from triggering the close filter menu event handler
         // the dropdown is relative so the contains() method won't register it as
