@@ -3,7 +3,7 @@ import { DateInputProps } from '../../interfaces';
 import { useState, useContext } from 'react';
 import { FormContext } from '../form_context/page';
 
-export default function DateInput({ componentName, inputFor, labelText, errorFor }: DateInputProps) {
+export default function DateInput({ componentName, inputFor, labelText, errorFor, dispatchError }: DateInputProps) {
     const [keyValue, setKeyValue] = useState('');
     const { getValue, setValue } = useContext(FormContext);
 
@@ -15,6 +15,7 @@ export default function DateInput({ componentName, inputFor, labelText, errorFor
     }
 
     function handleUserInput(e: React.ChangeEvent) {
+        if (errorFor) dispatchError?.({type: 'clearError', payload: errorFor});
         // Automatically inserts or deletes forward slashes as the user types
         let inputValue = (e.target as HTMLInputElement).value;
         if (/[0-9]/.test(keyValue)) {
