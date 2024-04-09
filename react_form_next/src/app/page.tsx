@@ -1,15 +1,16 @@
 'use client';
 import styles from './Register.module.scss';
-import { useState } from 'react';
-import { InputValues, ErrorObject } from '../interfaces';
+import { useState, useReducer, useEffect } from 'react';
+import { InputValues, ErrorObject, ActionObject } from '../interfaces';
 import { states } from '../stateList'; // Prop value for dropdown list
-import ValidatingForm from './form_context/page';
+import ValidatingFormContext from './form_context/page';
 import TextInput from './text_input/page';
 import DropdownInput from './dropdown_input/page';
 import DropdownFieldset from './dropdown_fieldset/page';
 import RadioInput from './radio_input/page';
 import DateInput from './date_input/page';
 import { RegisterModel } from '../class_defs';
+import errorReducer from './reducer';
 
 const inputValuesInit = {
   username: '',
@@ -25,92 +26,101 @@ const inputValuesInit = {
 
 export default function Register() {
   const [formValues, setFormValues] = useState<InputValues>(inputValuesInit);
-  const [errorObj, setErrorObj] = useState<ErrorObject>({});
+  const [errorObj, dispatch] = useReducer(errorReducer, {});
 
   function handleRegisterSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
     const registerInstance = new RegisterModel(formValues);
     const errors = registerInstance.checkErrors(states); // Passing states to check for incorrect dropdown input
     if (errors) {
-      setErrorObj(registerInstance.errorObj);
+      dispatch({type: 'setError', payload: registerInstance.errorObj});
     } else {
       // Fetch to API endpoint
     }
   }
-  console.log(errorObj)
+
   return (
-    <ValidatingForm setParentValues={setFormValues} initValues={formValues}>
+    <ValidatingFormContext setParentValues={setFormValues} initValues={formValues}>
       <form className={styles.registerForm} onSubmit={handleRegisterSubmit}>
         <TextInput
           componentName='register'
           inputFor='username'
           inputMode='text'
           isPassword={false}
-          errorFor={(errorObj?.usernameFormatError || errorObj?.usernameMissing) ?? false}
-          errorMsg={errorObj?.usernameFormatError ? 'Username cannot end with ".com"' : ''}
+          errorFor={(errorObj?.usernameMissing|| errorObj?.usernameFormatError) ?? ''}
+          errorMsg='Username cannot end with ".com"'
+          dispatchError={dispatch}
         />
         <TextInput
           componentName='register'
           inputFor='email'
           inputMode='email'
           isPassword={false}
-          errorFor={(errorObj?.emailFormatError || errorObj?.emailMissing) ?? false}
-          errorMsg={errorObj?.emailFormatError ? 'Email must be in correct format' : ''}
+          errorFor={(errorObj?.emailMissing || errorObj?.emailFormatError) ?? ''}
+          errorMsg='Email must be in correct format'
+          dispatchError={dispatch}
         />
         <TextInput
           componentName='register'
           inputFor='password'
           inputMode='text'
           isPassword={true}
-          errorFor={(errorObj?.passwordLengthError || errorObj?.passwordMissing) ?? false}
-          errorMsg={errorObj?.passwordLengthError ? 'Password must be at least 8 characters' : ''}
+          errorFor={(errorObj?.passwordMissing || errorObj?.passwordLengthError) ?? ''}
+          errorMsg='Password must be at least 8 characters'
+          dispatchError={dispatch}
         />
         <TextInput
           componentName='register'
           inputFor='passwordConfirm'
           inputMode='text'
           isPassword={true}
-          errorFor={(errorObj?.passwordMatchError || errorObj?.passwordConfirmMissing) ?? false}
-          errorMsg={errorObj?.passwordMatchError ? 'Passwords must match' : ''}
+          errorFor={(errorObj?.passwordConfirmMissing || errorObj?.passwordMatchError) ?? ''}
+          errorMsg='Passwords must match'
+          dispatchError={dispatch}
         />
         <TextInput
           componentName='register'
           inputFor='place'
           inputMode='text'
           isPassword={false}
-          errorFor={errorObj?.placeMissing ?? false}
+          errorFor={errorObj?.placeMissing ?? ''}
+          dispatchError={dispatch}
         />
         <DropdownInput
           componentName='register'
           inputFor='state'
           labelText='State'
           items={states}
-          errorFor={(errorObj?.stateMissing || errorObj?.incorrectDropdownInput) ?? false}
+          errorFor={(errorObj?.stateMissing || errorObj?.incorrectDropdownInput) ?? ''}
           errorMsg='Please enter a valid state'
+          dispatchError={dispatch}
         />
         <DropdownFieldset
           componentName='register'
           inputFor='ageRange'
           buttonText='Age range'
           items={['0-9', '10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80-89', '90-99']}
-          errorFor={errorObj?.ageRangeMissing ?? false}
+          errorFor={errorObj?.ageRangeMissing ?? ''}
+          dispatchError={dispatch}
         />
         <DateInput
           componentName='register'
           inputFor='dob'
           labelText='Date of birth'
-          errorFor={errorObj?.dobMissing ?? false}
+          errorFor={errorObj?.dobMissing ?? ''}
+          dispatchError={dispatch}
         />
         <RadioInput
           componentName='register'
           inputFor='accountType'
           labelText='Account type'
           items={['basic', 'premium']}
-          errorFor={errorObj?.accountTypeMissing ?? false}
+          errorFor={errorObj?.accountTypeMissing ?? ''}
+          dispatchError={dispatch}
         />
         <input type='submit' className={styles.submitButton} value='Register' />
         {RegisterModel.checkMissingErrors(errorObj) && <div className='register-missingPrompt'>* Please fill in required fields</div>}
       </form>
-    </ValidatingForm>
+    </ValidatingFormContext>
   )
 }
