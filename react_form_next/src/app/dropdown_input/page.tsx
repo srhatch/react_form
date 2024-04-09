@@ -3,7 +3,7 @@ import { DropdownInputProps } from '../../interfaces';
 import { useState, useRef, useContext, useCallback, useEffect } from 'react';
 import { FormContext } from '../form_context/page';
 
-export default function DropdownInput({ componentName, inputFor, items, errorFor, labelText, errorMsg }: DropdownInputProps) {
+export default function DropdownInput({ componentName, inputFor, items, errorFor, labelText, errorMsg, dispatchError }: DropdownInputProps) {
     const [isListHidden, setIsListHidden] = useState(true);
     const [itemList, setItemList] = useState<string[]>([]); // For filtering (and displaying) list items
     const itemListRef = useRef<HTMLUListElement>(null);
@@ -39,6 +39,7 @@ export default function DropdownInput({ componentName, inputFor, items, errorFor
     }, [isListHidden])
 
     function handleUserInput(e: React.ChangeEvent<HTMLInputElement>) {
+        if (errorFor) dispatchError?.({type: 'clearError', payload: errorFor});
         e.target.value.length > 0 ? setIsListHidden(false) : setIsListHidden(true); // Display the list if the user types anything
         listIndex.current = -1; // Reset the index used for keyboard navigation
         setValue('state', e.target.value); // Display what the user types real-time
