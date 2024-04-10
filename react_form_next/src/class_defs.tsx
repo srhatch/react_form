@@ -62,6 +62,15 @@ export class RegisterModel implements InputValues {
             this.errorObj.incorrectDropdownInput = 'incorrectDropdownInput';
         }
     }
+    checkDateLength() {
+        // If date input is too short then it can't be valid
+        if (this.dob && this.dob.length < 10) this.errorObj.dateLengthError = 'dateLengthError';
+    }
+    checkDateValid() {
+        const inputDate = this.makeDateObject();
+        const currentDate = new Date();
+        if (currentDate < inputDate) this.errorObj.invalidDateError = 'invalidDateError';
+    }
     checkErrors(dropdownInputList: string[]) {
         this.checkMissing();
         this.checkUsernameFormat();
@@ -69,10 +78,21 @@ export class RegisterModel implements InputValues {
         this.checkPasswordMatch();
         this.checkEmailFormat();
         this.checkDropdownInput(dropdownInputList);
+        this.checkDateLength();
+        this.checkDateValid();
         if (Object.keys(this.errorObj).length > 0) {
             return true;
         } else {
             return false;
         }
+    }
+
+    makeDateObject() {
+        // Utility: convert date input string to a Date object
+        const splitString = this.dob.split('/');
+        const reversedDateArray = splitString.reverse();
+        const formattedDateString = reversedDateArray.join('-');
+        const dateObj = new Date(formattedDateString);
+        return dateObj;
     }
 }
