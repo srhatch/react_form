@@ -1,7 +1,7 @@
 'use client';
 import styles from './Register.module.scss';
-import { useState, useReducer, useEffect } from 'react';
-import { InputValues, ErrorObject, ActionObject } from '../interfaces';
+import { useState, useReducer } from 'react';
+import { InputValues } from '../interfaces';
 import { states } from '../stateList'; // Prop value for dropdown list
 import ValidatingFormContext from './form_context/page';
 import TextInput from './text_input/page';
@@ -27,7 +27,7 @@ const inputValuesInit = {
 export default function Register() {
   const [formValues, setFormValues] = useState<InputValues>(inputValuesInit);
   const [errorObj, dispatch] = useReducer(errorReducer, {});
-
+console.log(errorObj)
   function handleRegisterSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
     const registerInstance = new RegisterModel(formValues);
@@ -107,7 +107,8 @@ export default function Register() {
           componentName='register'
           inputFor='dob'
           labelText='Date of birth'
-          errorFor={errorObj?.dobMissing ?? ''}
+          errorFor={(errorObj?.dobMissing || errorObj?.dateLengthError || errorObj?.invalidDateError) ?? ''}
+          errorMsg={errorObj?.invalidDateError ? 'Date must be after today' : 'Please enter a valid date (mm/dd/yyyy)'}
           dispatchError={dispatch}
         />
         <RadioInput
@@ -119,7 +120,7 @@ export default function Register() {
           dispatchError={dispatch}
         />
         <input type='submit' className={styles.submitButton} value='Register' />
-        {RegisterModel.checkMissingErrors(errorObj) && <div className='register-missingPrompt'>* Please fill in required fields</div>}
+        {Object.keys(errorObj).length > 0 && <div className='register-missingPrompt'>* Please fill in required fields</div>}
       </form>
     </ValidatingFormContext>
   )
