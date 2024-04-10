@@ -6,7 +6,7 @@ export default function errorReducer(state: ErrorObject, action: ActionObject): 
             if (typeof action.payload === 'object') return {...action.payload};
         case 'clearError':
             if (typeof action.payload === 'string') {
-                state[action.payload] = false;
+                delete state[action.payload];
                 return {...state};
             }
         default:
