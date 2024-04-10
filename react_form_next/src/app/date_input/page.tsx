@@ -3,7 +3,7 @@ import { DateInputProps } from '../../interfaces';
 import { useState, useContext } from 'react';
 import { FormContext } from '../form_context/page';
 
-export default function DateInput({ componentName, inputFor, labelText, errorFor, dispatchError }: DateInputProps) {
+export default function DateInput({ componentName, inputFor, labelText, errorFor, dispatchError, errorMsg }: DateInputProps) {
     const [keyValue, setKeyValue] = useState('');
     const { getValue, setValue } = useContext(FormContext);
 
@@ -56,7 +56,7 @@ export default function DateInput({ componentName, inputFor, labelText, errorFor
                 onKeyDown={handleGetKey}
                 onChange={handleUserInput}
             />
+            {(errorFor === 'dateLengthError' || errorFor === 'invalidDateError') && <div className={styles.dateErrorMsg}>{ errorMsg }</div>}
         </div>
-
     )
 }
