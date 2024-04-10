@@ -50,6 +50,7 @@ export default function DropdownInput({ componentName, inputFor, items, errorFor
     }
 
     function handleItemSelection(e: React.MouseEvent<HTMLButtonElement>) {
+        if (errorFor) dispatchError?.({type: 'clearError', payload: errorFor});
         e.preventDefault();
         setValue(inputFor, (e.target as HTMLButtonElement).value);
         inputRef.current?.focus();// remove this?
@@ -127,7 +128,7 @@ export default function DropdownInput({ componentName, inputFor, items, errorFor
                     </li>
                 )}
             </ul>
-            {(value.length > 0 && itemList.length === 0) && <div className={styles.incorrectInputErrorMsg}>{ errorMsg }</div>}
+            {((value.length > 0 && itemList.length === 0) || errorFor === 'incorrectDropdownInput') && <div className={styles.incorrectInputErrorMsg}>{ errorMsg }</div>}
         </div>
     )
 }
