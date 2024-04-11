@@ -1,18 +1,18 @@
-import { InputValues, ErrorObject } from '../../types/interfaces';
+import { InputObject, ErrorObject } from '../../types/interfaces';
 import { states } from '../../data/stateList';
 
-export class RegisterModel implements InputValues {
+export class RegisterModel {
     [index: string]: any;
-    username: any;
-    email: any;
-    password: any;
-    passwordConfirm: any;
-    place: any;
-    state: any;
-    ageRange: any;
-    accountType: any;
-    dob: any;
-    constructor(inputObj: any) {
+    username: InputObject;
+    email: InputObject;
+    password: InputObject;
+    passwordConfirm: InputObject;
+    place: InputObject;
+    state: InputObject;
+    ageRange: InputObject;
+    accountType: InputObject;
+    dob: InputObject;
+    constructor(inputObj: InputObject) {
         this.username = inputObj.username ?? {value: '', errors: []};
         this.email = inputObj.email ?? {value: '', errors: []};
         this.password = inputObj.password ?? {value: '', errors: []};
