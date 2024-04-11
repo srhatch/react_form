@@ -51,7 +51,7 @@ export default function ValidatingFormContext({ children, fetchFunction }: Valid
     // {Object.keys(inputValues).length > 0 && <div className='register-missingPrompt'>* Please fill in required fields</div>}
     return (
         <FormContext.Provider value={formMethods}>
-            <form className={styles.registerForm} onSubmit={handleRegisterSubmit}>
+            <form className={styles.form} onSubmit={handleRegisterSubmit}>
                 {children}
                 <input type='submit' className={styles.submitButton} value='Register' />
             </form>
