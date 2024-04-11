@@ -28,13 +28,10 @@ export default function ValidatingFormContext({ children, fetchFunction }: Valid
         }, [setInputValues]
     )
 
-    const resetForm = useCallback(() => setInputValues(Object.create({})), [setInputValues]);
-
     const formMethods = {
         getValue: getValue,
         setValue: setValue,
-        deleteValue: deleteValue,
-        resetForm: resetForm
+        deleteValue: deleteValue
     };
 
     function handleRegisterSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
