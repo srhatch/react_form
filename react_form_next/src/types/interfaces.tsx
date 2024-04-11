@@ -1,16 +1,9 @@
-// Defines the object that stores form input values
-export interface InputValues {
-    [index: string]: string;
-    username: string;
-    email: string;
-    password: string;
-    passwordConfirm: string;
-    place: string;
-    state: string;
-    ageRange: string;
-    dob: string;
+// Defines the object stored in inputValues state variable and in RegisterModel class properties
+export interface InputObject {
+    [index: string]: any;
+    value: string;
+    errors: ErrorObject[];
 }
-
 export interface ErrorObject {
     errorFor: string;
     errorMsg: string;
