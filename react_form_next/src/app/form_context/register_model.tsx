@@ -25,6 +25,8 @@ export class RegisterModel {
     }
 
     static getError(errorArray: ErrorObject[]) {
+        // Interface for input components to check whether there are validation errors
+        // If so, the first error is returned
         if (errorArray?.length > 0) {
             return errorArray[0]
         } else {
@@ -32,6 +34,8 @@ export class RegisterModel {
         }
     }
     static checkAnyErrors(inputObj: InputObject) {
+        // Interface for form component to check presence of any error
+        // If so, UI error signaling can be displayed
         for (let prop in inputObj) {
             if (inputObj[prop] && inputObj[prop].errors.length > 0) {
                 return true
@@ -54,7 +58,7 @@ export class RegisterModel {
         };
     }
     checkEmailFormat() {
-        // checks that an @ sign exists followed by at least one character
+        // Checks that an @ sign exists followed by at least one character
         // followed by only 1 . (literal), followed by at least two characters (top level domain)
         if (this.email?.value) {
             const emailRegex = /(.+)(@)(.+)(\.{1})(.{2,})$/;
@@ -84,6 +88,8 @@ export class RegisterModel {
         }
     }
     checkDropdownInput(fullList: string[]) {
+        // Pass in the list (array) that was passed to the dropdown input
+        // Checks whether user input exists in that list
         if (this.state?.value && !fullList.includes(this.state?.value)) {
             this.state.errors.push({
                 errorFor: 'incorrectDropdownInput',
@@ -111,6 +117,8 @@ export class RegisterModel {
         }
     }
     checkErrors() {
+        // Interfaces with form component as a wrapper function
+        // Returns true if any errors exist
         this.checkMissing();
         this.checkUsernameFormat();
         this.checkPasswordLength();
@@ -119,7 +127,7 @@ export class RegisterModel {
         this.checkDropdownInput(states);
         this.checkDateLength();
         this.checkDateValid();
-        const errorArray = Object.values(this).map(value => value.errors.length > 0);
+        const errorArray = Object.values(this).map(value => value.errors.length > 0); // An array of booleans to signal whether errors occurred
         if (errorArray.some(item => item === true)) {
             return true;
         } else {

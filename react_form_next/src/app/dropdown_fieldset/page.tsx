@@ -6,15 +6,16 @@ import { RegisterModel } from '../form_context/register_model';
 
 export default function DropdownFieldset({ componentName, inputFor, buttonText, items }: DropdownFieldsetProps) {
     const [isListHidden, setIsListHidden] = useState(true);
-    const menuButtonRef = useRef<HTMLButtonElement>(null);
-    const itemListRef = useRef<HTMLUListElement>(null);
-    const listIndex = useRef(-1);
+    const menuButtonRef = useRef<HTMLButtonElement>(null); // Mainly used for focusing
+    const itemListRef = useRef<HTMLUListElement>(null); // DOM entry point for navigating the list of items
+    const listIndex = useRef(-1); // Keep track of which li has focus
     const { getValue, setValue } = useContext(FormContext);
     const value = getValue(inputFor);
     const errorObj = RegisterModel.getError(value?.errors);
 
     const cachedClickCloseEvent = useCallback(
         (e: MouseEvent): void => {
+            // Close the menu if user clicks outside
             if (!itemListRef.current?.contains(e.target as Node) && !menuButtonRef.current?.contains(e.target as Node)) { 
                     setIsListHidden(true);
                     document.removeEventListener('click', cachedClickCloseEvent)
@@ -23,6 +24,7 @@ export default function DropdownFieldset({ componentName, inputFor, buttonText, 
 
     const cachedEscCloseList = useCallback(
         (e: KeyboardEvent) => {
+            // Close menu if Escape key is pressed
             if (itemListRef.current) {
                 if (e.key === 'Escape') {
                     setIsListHidden(true);
@@ -35,6 +37,7 @@ export default function DropdownFieldset({ componentName, inputFor, buttonText, 
 
         useEffect(() => {
             if (!isListHidden) {
+                // Add closing listeners if menu is open
                 document.addEventListener('click', cachedClickCloseEvent);
                 document.addEventListener('keydown', cachedEscCloseList);
             }
@@ -47,9 +50,6 @@ export default function DropdownFieldset({ componentName, inputFor, buttonText, 
 
     function handleItemSelect(e: React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
-        // event must be prevented from triggering the close filter menu event handler
-        // the dropdown is relative so the contains() method won't register it as
-        // a child element
         e.stopPropagation();
         setValue(inputFor, (e.target as HTMLButtonElement).value);
         (menuButtonRef.current as HTMLButtonElement).focus();
@@ -64,7 +64,6 @@ export default function DropdownFieldset({ componentName, inputFor, buttonText, 
                 listIndex.current--;
                 (itemListRef.current?.children[listIndex.current]?.firstElementChild as HTMLElement).focus();
             } else if (listIndex.current === 0) {
-                // Returns focus to the input element
                 menuButtonRef.current?.focus();
                 listIndex.current = -1;
             }

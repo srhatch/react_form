@@ -5,7 +5,7 @@ import { FormContext } from '../form_context/page';
 import { RegisterModel } from '../form_context/register_model';
 
 export default function RadioInput({ componentName, inputFor, labelText, items }: RadioInputProps) {
-    const [isSelected, setIsSelected] = useState<string>('');
+    const [isSelected, setIsSelected] = useState<string>(''); // Determines CSS styling
     const { getValue, setValue } = useContext(FormContext);
     const value = getValue(inputFor);
     const errorObj = RegisterModel.getError(value?.errors);

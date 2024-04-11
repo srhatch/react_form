@@ -11,9 +11,7 @@ export default function DateInput({ componentName, inputFor, labelText, dateForm
     const errorObj = RegisterModel.getError(value?.errors);
 
     function handleGetKey(e: React.KeyboardEvent<HTMLInputElement>) {
-        // Gets the key string so the handleUserInput handler can
-        // use logic to prevent letter keys from being entered
-        // and allowing the input to be deleted with backspace
+        // Gets the key string for handleUserInput (which is an onChange handler)
         setKeyValue(e.key);
     }
 
@@ -31,8 +29,7 @@ export default function DateInput({ componentName, inputFor, labelText, dateForm
                 setValue(inputFor, inputValue);
             }
         } else if (keyValue === 'Backspace') {
-            // Deletes the slash automatically if deleting starts from
-            // from the slash
+            // Deletes the slash automatically if deleting starts from from a '/'
             if (inputValue.length === 5 || inputValue.length === 2) {
                 setValue(inputFor, (inputValue.substring(0, inputValue.length - 1)));
             } else {

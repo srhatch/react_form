@@ -8,10 +8,11 @@ export const FormContext = createContext(Object.create({}));
 
 export default function ValidatingFormContext({ children, fetchFunction }: ValidatingFormProps) {
     // Provides setter and getter functions to its children to update the inputValues object
-    // Wrap inputs in this component
+    // Wrap form inputs in this component
     const [inputValues, setInputValues] = useState<any>({});
 
     const setValue = useCallback(
+        // Clear error array when user types so UI error signaling disappears
         (name: string, value: string) => setInputValues(
             (inputObj: InputObject) => ({...inputObj, [name]: {value: value, errors: []}})
         ), [setInputValues]
@@ -37,7 +38,7 @@ export default function ValidatingFormContext({ children, fetchFunction }: Valid
     function handleRegisterSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
         e.preventDefault();
         const registerInstance = new RegisterModel(inputValues);
-        const errors = registerInstance.checkErrors(); // Passing states to check for incorrect dropdown input
+        const errors = registerInstance.checkErrors();
         if (errors) {
             setInputValues(registerInstance);
         } else {

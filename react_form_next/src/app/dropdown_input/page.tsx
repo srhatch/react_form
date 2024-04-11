@@ -7,10 +7,9 @@ import { RegisterModel } from '../form_context/register_model';
 export default function DropdownInput({ componentName, inputFor, items, labelText }: DropdownInputProps) {
     const [isListHidden, setIsListHidden] = useState(true);
     const [itemList, setItemList] = useState<string[]>([]); // For filtering (and displaying) list items
-    const itemListRef = useRef<HTMLUListElement>(null);
+    const itemListRef = useRef<HTMLUListElement>(null); // For navigating the ul
     const inputRef = useRef<HTMLInputElement>(null); // Used to put back focus on input element
     const listIndex = useRef(-1); // For applying CSS styling to highlight the current focues (button) element
-
     const { getValue, setValue } = useContext(FormContext);
     const value = getValue(inputFor);
     const errorObj = RegisterModel.getError(value?.errors);
@@ -25,7 +24,7 @@ export default function DropdownInput({ componentName, inputFor, items, labelTex
     }, [itemListRef, setIsListHidden])
 
     const cachedEscCloseItemList = useCallback(
-        // To make the menu close with Escape key
+        // Close with Escape key
         (e: KeyboardEvent): void => {
             if (e.key === 'Escape') {
                 setIsListHidden(true);
@@ -35,6 +34,7 @@ export default function DropdownInput({ componentName, inputFor, items, labelTex
 
     useEffect(() => {
         if (!isListHidden) {
+            // Add listeners if menu is visible
             document.addEventListener('click', cachedClickCloseItemList);
             document.addEventListener('keydown', cachedEscCloseItemList);
         }
@@ -53,13 +53,13 @@ export default function DropdownInput({ componentName, inputFor, items, labelTex
     function handleItemSelection(e: React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
         setValue(inputFor, (e.target as HTMLButtonElement).value);
-        inputRef.current?.focus();// remove this?
+        inputRef.current?.focus();
         setIsListHidden(true);
         listIndex.current = -1; // Reset so when the user starts deleting text the old index won't cause that <li> to highlight
     }
 
     function handleReopenList(e: React.FocusEvent<HTMLInputElement>) {
-        e.stopPropagation(); // Stop event from triggering close menu event handler
+        e.stopPropagation();
         if (value?.length > 0) {
             // Only open if text is present
             setIsListHidden(false);
@@ -67,8 +67,7 @@ export default function DropdownInput({ componentName, inputFor, items, labelTex
     }
 
     function handleArrowNav(e: React.KeyboardEvent<HTMLInputElement | HTMLButtonElement>) {
-        // preventDefault() is needed because the list may have a scrollbar and default
-        // behavior for arrow keys is to scroll
+        // preventDefault() is needed because the list may have a scrollbar and default behavior for arrow keys is to scroll
         if (e.key === 'ArrowUp') {
             e.preventDefault();
             if (listIndex.current > 0 ) {
