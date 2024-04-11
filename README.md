@@ -24,4 +24,4 @@ The DropdownInput component takes in a list of string items that will be used as
 Functionality can be examined by running the next dev server:
 Change directory to react_form_next
 Run command "npm run dev"
-Open a browser to http://localhost/3000
+Open a browser to http://localhost:3000

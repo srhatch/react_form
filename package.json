@@ -1,0 +1,19 @@
+{
+  "name": "react_form",
+  "version": "1.0.0",
+  "description": "An example form component with various types of inputs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/s-hatch/react_form.git"
+  },
+  "author": "Sam Hatch",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/s-hatch/react_form/issues"
+  },
+  "homepage": "https://github.com/s-hatch/react_form#readme"
+}
