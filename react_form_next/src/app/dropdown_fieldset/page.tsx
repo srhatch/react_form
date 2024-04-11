@@ -2,14 +2,16 @@ import styles from './DropdownFieldset.module.scss';
 import { DropdownFieldsetProps } from '../../interfaces';
 import { useState, useRef, useContext, useCallback, useEffect } from 'react';
 import { FormContext } from '../form_context/page';
+import { RegisterModel } from '../../class_defs';
 
-export default function DropdownFieldset({ componentName, inputFor, buttonText, items, errorFor, errorMsg, dispatchError }: DropdownFieldsetProps) {
+export default function DropdownFieldset({ componentName, inputFor, buttonText, items }: DropdownFieldsetProps) {
     const [isListHidden, setIsListHidden] = useState(true);
     const menuButtonRef = useRef<HTMLButtonElement>(null);
     const itemListRef = useRef<HTMLUListElement>(null);
     const listIndex = useRef(-1);
     const { getValue, setValue } = useContext(FormContext);
     const value = getValue(inputFor);
+    const errorObj = RegisterModel.checkError(value?.errors);
 
     const cachedClickCloseEvent = useCallback(
         (e: MouseEvent): void => {
@@ -44,7 +46,6 @@ export default function DropdownFieldset({ componentName, inputFor, buttonText, 
     }
 
     function handleItemSelect(e: React.MouseEvent<HTMLButtonElement>) {
-        if (errorFor) dispatchError?.({type: 'clearError', payload: errorFor});
         e.preventDefault();
         // event must be prevented from triggering the close filter menu event handler
         // the dropdown is relative so the contains() method won't register it as
@@ -87,17 +88,17 @@ export default function DropdownFieldset({ componentName, inputFor, buttonText, 
     return (
         <div className={[styles.fieldsetContainer, `${componentName}-fieldsetContainer`].join(' ')}>
             <fieldset>
-                <input type='hidden' name={inputFor} value={value} />
+                <input type='hidden' name={inputFor} value={value?.value ?? ''} />
                 <button
                     ref={menuButtonRef}
                     type='button'
-                    className={ errorFor ? [styles.openMenuButton, 'errorOutline'].join(' ') : styles.openMenuButton}
+                    className={ errorObj ? [styles.openMenuButton, 'errorOutline'].join(' ') : styles.openMenuButton}
                     onKeyDown={(e) => {
                         handleArrowNav(e);
                         handleTabNav(e);
                     }}
                     onClick={handleMenuClick}
-                >{value || buttonText}{errorFor ? ' *' : ''}</button>
+                >{value?.value || buttonText}{errorObj ? ' *' : ''}</button>
                 {
                     !isListHidden &&
                     <ul ref={itemListRef} className={styles.itemList}>
@@ -116,7 +117,7 @@ export default function DropdownFieldset({ componentName, inputFor, buttonText, 
                     </ul>
                 }
             </fieldset>
-            {errorFor && <div className='errorMsg'>{errorMsg}</div>}
+            {errorObj && <div className='errorMsg'>{errorObj?.errorMsg}</div>}
         </div>
     )
 }
