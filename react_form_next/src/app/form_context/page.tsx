@@ -1,7 +1,7 @@
 'use client';
 import styles from './FormContext.module.scss';
 import { createContext, useState, useCallback } from 'react';
-import { ValidatingFormProps } from '../../types/interfaces';
+import { ValidatingFormProps, InputObject } from '../../types/interfaces';
 import { RegisterModel } from './register_model';
 
 export const FormContext = createContext(Object.create({}));
@@ -13,7 +13,7 @@ export default function ValidatingFormContext({ children, fetchFunction }: Valid
 
     const setValue = useCallback(
         (name: string, value: string) => setInputValues(
-            (inputObj: any) => ({...inputObj, [name]: {value: value, errors: []}})
+            (inputObj: InputObject) => ({...inputObj, [name]: {value: value, errors: []}})
         ), [setInputValues]
     );
 
@@ -21,9 +21,9 @@ export default function ValidatingFormContext({ children, fetchFunction }: Valid
 
     const deleteValue = useCallback(
         (name: string) => {
-            setInputValues((v:any) =>{
-                delete v[name];
-                return {...v};
+            setInputValues((inputObj: InputObject) =>{
+                delete inputObj[name];
+                return {...inputObj};
             })
         }, [setInputValues]
     )
