@@ -1,8 +1,8 @@
 import styles from './DropdownInput.module.scss';
-import { DropdownInputProps } from '../../interfaces';
+import { DropdownInputProps } from '../../types/interfaces';
 import { useState, useRef, useContext, useCallback, useEffect } from 'react';
 import { FormContext } from '../form_context/page';
-import { RegisterModel } from '../../class_defs';
+import { RegisterModel } from '../form_context/register_model';
 
 export default function DropdownInput({ componentName, inputFor, items, labelText }: DropdownInputProps) {
     const [isListHidden, setIsListHidden] = useState(true);

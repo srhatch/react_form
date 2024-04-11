@@ -1,8 +1,8 @@
 import styles from './RadioInput.module.scss';
-import { RadioInputProps } from '../../interfaces';
+import { RadioInputProps } from '../../types/interfaces';
 import { useContext, useState } from 'react'
 import { FormContext } from '../form_context/page';
-import { RegisterModel } from '../../class_defs';
+import { RegisterModel } from '../form_context/register_model';
 
 export default function RadioInput({ componentName, inputFor, labelText, items }: RadioInputProps) {
     const [isSelected, setIsSelected] = useState<string>('');

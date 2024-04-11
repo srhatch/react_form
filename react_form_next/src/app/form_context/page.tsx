@@ -1,8 +1,8 @@
 'use client';
 import styles from './FormContext.module.scss';
 import { createContext, useState, useCallback } from 'react';
-import { ValidatingFormProps } from '../../interfaces';
-import { RegisterModel } from '../../class_defs';
+import { ValidatingFormProps } from '../../types/interfaces';
+import { RegisterModel } from './register_model';
 
 export const FormContext = createContext(Object.create({}));
 

@@ -1,8 +1,8 @@
 import styles from './DateInput.module.scss';
-import { DateInputProps } from '../../interfaces';
+import { DateInputProps } from '../../types/interfaces';
 import { useState, useContext } from 'react';
 import { FormContext } from '../form_context/page';
-import { RegisterModel } from '../../class_defs';
+import { RegisterModel } from '../form_context/register_model';
 
 export default function DateInput({ componentName, inputFor, labelText }: DateInputProps) {
     const [keyValue, setKeyValue] = useState('');
