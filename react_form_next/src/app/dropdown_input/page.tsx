@@ -2,8 +2,9 @@ import styles from './DropdownInput.module.scss';
 import { DropdownInputProps } from '../../interfaces';
 import { useState, useRef, useContext, useCallback, useEffect } from 'react';
 import { FormContext } from '../form_context/page';
+import { RegisterModel } from '../../class_defs';
 
-export default function DropdownInput({ componentName, inputFor, items, errorFor, labelText, errorMsg, dispatchError }: DropdownInputProps) {
+export default function DropdownInput({ componentName, inputFor, items, labelText }: DropdownInputProps) {
     const [isListHidden, setIsListHidden] = useState(true);
     const [itemList, setItemList] = useState<string[]>([]); // For filtering (and displaying) list items
     const itemListRef = useRef<HTMLUListElement>(null);
@@ -12,6 +13,7 @@ export default function DropdownInput({ componentName, inputFor, items, errorFor
 
     const { getValue, setValue } = useContext(FormContext);
     const value = getValue(inputFor);
+    const errorObj = RegisterModel.checkError(value?.errors);
 
     const cachedClickCloseItemList = useCallback((e: MouseEvent): void => {
         // To make the menu close by clicking outside its area
@@ -39,7 +41,6 @@ export default function DropdownInput({ componentName, inputFor, items, errorFor
     }, [isListHidden])
 
     function handleUserInput(e: React.ChangeEvent<HTMLInputElement>) {
-        if (errorFor) dispatchError?.({type: 'clearError', payload: errorFor});
         e.target.value.length > 0 ? setIsListHidden(false) : setIsListHidden(true); // Display the list if the user types anything
         listIndex.current = -1; // Reset the index used for keyboard navigation
         setValue('state', e.target.value); // Display what the user types real-time
@@ -50,7 +51,6 @@ export default function DropdownInput({ componentName, inputFor, items, errorFor
     }
 
     function handleItemSelection(e: React.MouseEvent<HTMLButtonElement>) {
-        if (errorFor) dispatchError?.({type: 'clearError', payload: errorFor});
         e.preventDefault();
         setValue(inputFor, (e.target as HTMLButtonElement).value);
         inputRef.current?.focus();// remove this?
@@ -100,15 +100,15 @@ export default function DropdownInput({ componentName, inputFor, items, errorFor
     return (
         <div className={[`${componentName}_${inputFor}InputDiv`, styles.dropdownContainer].join(' ')}>
             <label htmlFor={`${inputFor}Input-id`} className={styles.stateLabel}>
-                {labelText}{errorFor ? ' *' : ''}
+                {labelText}{errorObj ? ' *' : ''}
             </label>
             <input
                 ref={inputRef}
                 id={`${inputFor}Input-id`}
                 type="text"
-                className={errorFor ? [styles.dropdownInput, 'errorOutline'].join(' ') : styles.dropdownInput}
+                className={errorObj ? [styles.dropdownInput, 'errorOutline'].join(' ') : styles.dropdownInput}
                 name={inputFor}
-                value={value}
+                value={value?.value ?? ''}
                 onChange={handleUserInput}
                 onKeyDown={(e) => {
                     handleArrowNav(e);
@@ -128,7 +128,7 @@ export default function DropdownInput({ componentName, inputFor, items, errorFor
                     </li>
                 )}
             </ul>
-            {((value.length > 0 && itemList.length === 0) || errorFor === 'incorrectDropdownInput') && <div className={styles.incorrectInputErrorMsg}>{ errorMsg }</div>}
+            {errorObj && <div className={styles.incorrectInputErrorMsg}>{ errorObj?.errorMsg }</div>}
         </div>
     )
 }
