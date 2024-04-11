@@ -2,10 +2,13 @@ import styles from './DateInput.module.scss';
 import { DateInputProps } from '../../interfaces';
 import { useState, useContext } from 'react';
 import { FormContext } from '../form_context/page';
+import { RegisterModel } from '../../class_defs';
 
-export default function DateInput({ componentName, inputFor, labelText, errorFor, dispatchError, errorMsg }: DateInputProps) {
+export default function DateInput({ componentName, inputFor, labelText }: DateInputProps) {
     const [keyValue, setKeyValue] = useState('');
     const { getValue, setValue } = useContext(FormContext);
+    const value = getValue(inputFor);
+    const errorObj = RegisterModel.checkError(value?.errors);
 
     function handleGetKey(e: React.KeyboardEvent<HTMLInputElement>) {
         // Gets the key string so the handleUserInput handler can
@@ -15,7 +18,6 @@ export default function DateInput({ componentName, inputFor, labelText, errorFor
     }
 
     function handleUserInput(e: React.ChangeEvent) {
-        if (errorFor) dispatchError?.({type: 'clearError', payload: errorFor});
         // Automatically inserts or deletes forward slashes as the user types
         let inputValue = (e.target as HTMLInputElement).value;
         if (/[0-9]/.test(keyValue)) {
@@ -44,19 +46,19 @@ export default function DateInput({ componentName, inputFor, labelText, errorFor
             <label
                 htmlFor={`${componentName}-${inputFor}Id`}
                 className={styles.dateLabel}
-            >{labelText}{errorFor ? ' *' : ''}</label>
+            >{labelText}{errorObj ? ' *' : ''}</label>
             <input
                 id={`${componentName}-${inputFor}Id`}
-                className={errorFor ? [styles.dateInput, 'errorOutline'].join(' ') : styles.dateInput}
+                className={errorObj ? [styles.dateInput, 'errorOutline'].join(' ') : styles.dateInput}
                 type='text'
                 inputMode='numeric'
                 name={inputFor}
-                value={getValue(inputFor)}
+                value={value?.value ?? ''}
                 maxLength={12}
                 onKeyDown={handleGetKey}
                 onChange={handleUserInput}
             />
-            {(errorFor === 'dateLengthError' || errorFor === 'invalidDateError') && <div className={styles.dateErrorMsg}>{ errorMsg }</div>}
+            {errorObj && <div className={styles.dateErrorMsg}>{ errorObj?.errorMsg }</div>}
         </div>
     )
 }
