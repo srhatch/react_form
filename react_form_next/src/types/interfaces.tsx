@@ -21,7 +21,6 @@ export interface ComponentProps {
     inputFor: string; // determines input-specific label text, classNames, and name attribute
     errorFor?: string; // determines displayed error text and acts as a flag to show other UI error markers
     errorMsg?: string; // Text display of client-side validation error
-    dispatchError?: Function;
 }
 
 export interface TextInputProps extends ComponentProps {
