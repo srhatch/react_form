@@ -24,11 +24,18 @@ export class RegisterModel {
         this.dob = inputObj.dob ?? {value: '', errors: []};
     }
 
-    static checkError(errorArray: ErrorObject[]) {
+    static getError(errorArray: ErrorObject[]) {
         if (errorArray?.length > 0) {
             return errorArray[0]
         } else {
             return undefined;
+        }
+    }
+    static checkAnyErrors(inputObj: InputObject) {
+        for (let prop in inputObj) {
+            if (inputObj[prop] && inputObj[prop].errors.length > 0) {
+                return true
+            }
         }
     }
     checkMissing() {
