@@ -7,7 +7,7 @@ import { RegisterModel } from '../form_context/register_model';
 export default function TextInput({ componentName, inputFor, labelText, inputMode, isPassword}: TextInputProps) {
     const { getValue, setValue } = useContext(FormContext);
     const value = getValue(inputFor);
-    const errorObj = RegisterModel.checkError(value?.errors);
+    const errorObj = RegisterModel.getError(value?.errors);
     const baseIdentity = `${componentName}_${inputFor}`;
     const inputClass = generateInputClass(baseIdentity, errorObj?.errorFor);
     const labelClass = generateLabelClass(baseIdentity);

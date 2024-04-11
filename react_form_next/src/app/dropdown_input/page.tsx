@@ -13,7 +13,7 @@ export default function DropdownInput({ componentName, inputFor, items, labelTex
 
     const { getValue, setValue } = useContext(FormContext);
     const value = getValue(inputFor);
-    const errorObj = RegisterModel.checkError(value?.errors);
+    const errorObj = RegisterModel.getError(value?.errors);
 
     const cachedClickCloseItemList = useCallback((e: MouseEvent): void => {
         // To make the menu close by clicking outside its area

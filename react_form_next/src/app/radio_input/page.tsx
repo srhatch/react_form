@@ -8,7 +8,7 @@ export default function RadioInput({ componentName, inputFor, labelText, items }
     const [isSelected, setIsSelected] = useState<string>('');
     const { getValue, setValue } = useContext(FormContext);
     const value = getValue(inputFor);
-    const errorObj = RegisterModel.checkError(value?.errors);
+    const errorObj = RegisterModel.getError(value?.errors);
 
     function handleRadioClick(e: React.MouseEvent<HTMLButtonElement>, item: string) {
         e.preventDefault();

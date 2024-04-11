@@ -8,7 +8,7 @@ export default function DateInput({ componentName, inputFor, labelText, dateForm
     const [keyValue, setKeyValue] = useState('');
     const { getValue, setValue } = useContext(FormContext);
     const value = getValue(inputFor);
-    const errorObj = RegisterModel.checkError(value?.errors);
+    const errorObj = RegisterModel.getError(value?.errors);
 
     function handleGetKey(e: React.KeyboardEvent<HTMLInputElement>) {
         // Gets the key string so the handleUserInput handler can

@@ -11,7 +11,7 @@ export default function DropdownFieldset({ componentName, inputFor, buttonText, 
     const listIndex = useRef(-1);
     const { getValue, setValue } = useContext(FormContext);
     const value = getValue(inputFor);
-    const errorObj = RegisterModel.checkError(value?.errors);
+    const errorObj = RegisterModel.getError(value?.errors);
 
     const cachedClickCloseEvent = useCallback(
         (e: MouseEvent): void => {
