@@ -2,23 +2,25 @@ import styles from './RadioInput.module.scss';
 import { RadioInputProps } from '../../interfaces';
 import { useContext, useState } from 'react'
 import { FormContext } from '../form_context/page';
+import { RegisterModel } from '../../class_defs';
 
-export default function RadioInput({ componentName, inputFor, labelText, items, errorFor, dispatchError }: RadioInputProps) {
+export default function RadioInput({ componentName, inputFor, labelText, items }: RadioInputProps) {
     const [isSelected, setIsSelected] = useState<string>('');
     const { getValue, setValue } = useContext(FormContext);
+    const value = getValue(inputFor);
+    const errorObj = RegisterModel.checkError(value?.errors);
 
     function handleRadioClick(e: React.MouseEvent<HTMLButtonElement>, item: string) {
         e.preventDefault();
-        if (errorFor) dispatchError?.({type: 'clearError', payload: errorFor});
         setValue(inputFor, item);
         setIsSelected(item);
     }
 
     return (
-        <div className={errorFor ? [styles.radioContainer, 'errorOutline', `${componentName}-radioContainer`].join(' ') : [styles.radioContainer, `${componentName}-radioContainer`].join(' ')}>
+        <div className={errorObj ? [styles.radioContainer, 'errorOutline', `${componentName}-radioContainer`].join(' ') : [styles.radioContainer, `${componentName}-radioContainer`].join(' ')}>
             <fieldset>
                 <label className={styles.radioLabel} htmlFor={`${inputFor}-hiddenInput`}>
-                    {labelText}{errorFor ? ' *' : ''}
+                    {labelText}{errorObj ? ' *' : ''}
                 </label>
                 {
                     items?.map((item) => {
@@ -27,8 +29,7 @@ export default function RadioInput({ componentName, inputFor, labelText, items, 
                                 key={item}
                                 className={isSelected === item ? [styles.radioButton, styles.selected].join(' ') : styles.radioButton}
                                 onClick={(e) => {handleRadioClick(e, item)}}
-                            >{item.replace(item[0], item[0].toUpperCase())}
-                        </button>
+                            >{item.replace(item[0], item[0].toUpperCase())}</button>
                         )
                     })
                 }
@@ -36,7 +37,7 @@ export default function RadioInput({ componentName, inputFor, labelText, items, 
                     id={`${inputFor}-hiddenInput`}
                     type="hidden"
                     name={inputFor}
-                    value={getValue(inputFor)}
+                    value={value?.value ?? ''}
                 />
             </fieldset>
         </div>
