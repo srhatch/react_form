@@ -46,4 +46,5 @@ export interface RadioInputProps extends ComponentProps {
 
 export interface DateInputProps extends ComponentProps {
     labelText: string;
+    dateFormat: string;
 }

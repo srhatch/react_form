@@ -62,6 +62,7 @@ export default function Register() {
           componentName='register'
           inputFor='dob'
           labelText='Date of birth'
+          dateFormat='mm/dd/yyyy'
         />
         <RadioInput
           componentName='register'

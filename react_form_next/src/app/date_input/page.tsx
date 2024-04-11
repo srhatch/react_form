@@ -4,7 +4,7 @@ import { useState, useContext } from 'react';
 import { FormContext } from '../form_context/page';
 import { RegisterModel } from '../form_context/register_model';
 
-export default function DateInput({ componentName, inputFor, labelText }: DateInputProps) {
+export default function DateInput({ componentName, inputFor, labelText, dateFormat }: DateInputProps) {
     const [keyValue, setKeyValue] = useState('');
     const { getValue, setValue } = useContext(FormContext);
     const value = getValue(inputFor);
@@ -55,6 +55,7 @@ export default function DateInput({ componentName, inputFor, labelText }: DateIn
                 name={inputFor}
                 value={value?.value ?? ''}
                 maxLength={12}
+                placeholder={dateFormat}
                 onKeyDown={handleGetKey}
                 onChange={handleUserInput}
             />
