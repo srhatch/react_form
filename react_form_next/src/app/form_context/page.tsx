@@ -44,13 +44,13 @@ export default function ValidatingFormContext({ children, fetchFunction }: Valid
           // Fetch to API endpoint: fetchFunction(values);
         }
     }
-    console.log(inputValues)
-    // {Object.keys(inputValues).length > 0 && <div className='register-missingPrompt'>* Please fill in required fields</div>}
+
     return (
         <FormContext.Provider value={formMethods}>
             <form className={styles.form} onSubmit={handleRegisterSubmit}>
                 {children}
                 <input type='submit' className={styles.submitButton} value='Register' />
+                {RegisterModel.checkAnyErrors(inputValues) && <div className='register-missingPrompt'>* Please fix any errors</div>}
             </form>
         </FormContext.Provider>
     )
