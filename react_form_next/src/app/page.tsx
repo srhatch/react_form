@@ -6,11 +6,12 @@ import DropdownInput from './dropdown_input/page';
 import DropdownFieldset from './dropdown_fieldset/page';
 import RadioInput from './radio_input/page';
 import DateInput from './date_input/page';
+import { processSubmit } from '../utilities/utils';
 // import { fetchFunction } from 'route/to/data/service';
 
 export default function Register() {
   return (
-    <ValidatingFormContext fetchFunction={undefined}>
+    <ValidatingFormContext fetchFunction={undefined} processSubmit={processSubmit}>
         <TextInput
           componentName='register'
           inputFor='username'

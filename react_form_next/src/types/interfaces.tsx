@@ -4,6 +4,12 @@ export interface InputObject {
     value: string;
     errors: ErrorObject[];
 }
+
+// Defines the state variable held in the form context component
+export interface FormInputValues {
+    [key: string]: InputObject
+}
+
 export interface ErrorObject {
     isError: boolean;
     errorMsg: string;
@@ -12,6 +18,7 @@ export interface ErrorObject {
 // Defines the value property of the form context
 export interface ValidatingFormProps {
     children: JSX.Element|JSX.Element[];
+    processSubmit: (inputObject: any) => (boolean | any)[];
     fetchFunction: undefined;
 }
 

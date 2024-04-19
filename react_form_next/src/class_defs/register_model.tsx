@@ -1,5 +1,5 @@
-import { InputObject, ErrorObject } from '../../types/interfaces';
-import { states } from '../../data/stateList';
+import { InputObject, FormInputValues } from '../types/interfaces';
+import { states } from '../data/stateList';
 
 export class RegisterModel {
     [index: string]: any;
@@ -12,7 +12,7 @@ export class RegisterModel {
     ageRange: InputObject;
     accountType: InputObject;
     dob: InputObject;
-    constructor(inputObj: InputObject) {
+    constructor(inputObj: FormInputValues) {
         this.username = inputObj.username ?? {value: '', errors: []};
         this.email = inputObj.email ?? {value: '', errors: []};
         this.password = inputObj.password ?? {value: '', errors: []};
@@ -24,15 +24,6 @@ export class RegisterModel {
         this.dob = inputObj.dob ?? {value: '', errors: []};
     }
 
-    static checkAnyErrors(inputObj: InputObject) {
-        // Interface for form component to check presence of any error
-        // If so, UI error signaling can be displayed
-        for (let prop in inputObj) {
-            if (inputObj[prop] && inputObj[prop].errors.length > 0) {
-                return true
-            }
-        }
-    }
     checkMissing() {
         for (let prop in this) {
             if (!this[prop]?.value) {

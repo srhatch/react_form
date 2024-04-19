@@ -1,20 +1,19 @@
 'use client';
 import styles from './FormContext.module.scss';
 import { createContext, useState, useCallback } from 'react';
-import { ValidatingFormProps, InputObject, ErrorObject } from '../../types/interfaces';
-import { RegisterModel } from './register_model';
+import { ValidatingFormProps, ErrorObject, FormInputValues } from '../../types/interfaces';
 
 export const FormContext = createContext(Object.create({}));
 
-export default function ValidatingFormContext({ children, fetchFunction }: ValidatingFormProps) {
+export default function ValidatingFormContext({ children, processSubmit, fetchFunction }: ValidatingFormProps) {
     // Provides setter and getter functions to its children to update the inputValues object
     // Wrap form inputs in this component
-    const [inputValues, setInputValues] = useState<any>({});
+    const [inputValues, setInputValues] = useState<FormInputValues>({});
 
     const setValue = useCallback(
         // Clear error array when user types so UI error signaling disappears
         (name: string, value: string) => setInputValues(
-            (inputObj: InputObject) => ({...inputObj, [name]: {value: value, errors: []}})
+            (inputObj: FormInputValues) => ({...inputObj, [name]: {value: value, errors: []}})
         ), [setInputValues]
     );
 
@@ -22,7 +21,7 @@ export default function ValidatingFormContext({ children, fetchFunction }: Valid
 
     const deleteValue = useCallback(
         (name: string) => {
-            setInputValues((inputObj: InputObject) =>{
+            setInputValues((inputObj: FormInputValues) =>{
                 delete inputObj[name];
                 return {...inputObj};
             })
@@ -47,12 +46,20 @@ export default function ValidatingFormContext({ children, fetchFunction }: Valid
 
     function handleRegisterSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
         e.preventDefault();
-        const registerInstance = new RegisterModel(inputValues);
-        const errors = registerInstance.checkErrors();
+        const [errors, values] = processSubmit(inputValues);
         if (errors) {
-            setInputValues(registerInstance);
+            setInputValues(values);
         } else {
           // Fetch to API endpoint: fetchFunction(values);
+        }
+    }
+
+    function checkAnyErrors() {
+        // To display error message
+        for (let prop in inputValues) {
+            if (prop && inputValues[prop].errors.length > 0) {
+                return true;
+            }
         }
     }
 
@@ -61,7 +68,7 @@ export default function ValidatingFormContext({ children, fetchFunction }: Valid
             <form className={styles.form} onSubmit={handleRegisterSubmit}>
                 {children}
                 <input type='submit' className={styles.submitButton} value='Register' />
-                {RegisterModel.checkAnyErrors(inputValues) && <div className='register-missingPrompt'>* Please fix any errors</div>}
+                {checkAnyErrors() && <div className='register-missingPrompt'>* Please fix any errors</div>}
             </form>
         </FormContext.Provider>
     )
