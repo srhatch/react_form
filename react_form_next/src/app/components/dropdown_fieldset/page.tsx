@@ -1,5 +1,5 @@
 import styles from './DropdownFieldset.module.scss';
-import { DropdownFieldsetProps } from '../../types/interfaces';
+import { DropdownFieldsetProps } from '../../../types/interfaces';
 import { useState, useRef, useContext, useCallback, useEffect } from 'react';
 import { FormContext } from '../form_context/page';
 

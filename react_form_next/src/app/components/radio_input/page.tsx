@@ -1,5 +1,5 @@
 import styles from './RadioInput.module.scss';
-import { RadioInputProps } from '../../types/interfaces';
+import { RadioInputProps } from '../../../types/interfaces';
 import { useContext, useState } from 'react'
 import { FormContext } from '../form_context/page';
 

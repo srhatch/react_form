@@ -1,11 +1,11 @@
 'use client';
 import { states } from '../data/stateList'; // Prop value for dropdown list
-import ValidatingFormContext from './form_context/page';
-import TextInput from './text_input/page';
-import DropdownInput from './dropdown_input/page';
-import DropdownFieldset from './dropdown_fieldset/page';
-import RadioInput from './radio_input/page';
-import DateInput from './date_input/page';
+import ValidatingFormContext from './components/form_context/page';
+import TextInput from './components/text_input/page';
+import DropdownInput from './components/dropdown_input/page';
+import DropdownFieldset from './components/dropdown_fieldset/page';
+import RadioInput from './components/radio_input/page';
+import DateInput from './components/date_input/page';
 import { processSubmit } from '../utilities/utils';
 // import { fetchFunction } from 'route/to/data/service';
 
