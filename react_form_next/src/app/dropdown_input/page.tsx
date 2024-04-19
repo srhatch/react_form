@@ -2,7 +2,6 @@ import styles from './DropdownInput.module.scss';
 import { DropdownInputProps } from '../../types/interfaces';
 import { useState, useRef, useContext, useCallback, useEffect } from 'react';
 import { FormContext } from '../form_context/page';
-import { RegisterModel } from '../form_context/register_model';
 
 export default function DropdownInput({ componentName, inputFor, items, labelText }: DropdownInputProps) {
     const [isListHidden, setIsListHidden] = useState(true);
@@ -10,9 +9,9 @@ export default function DropdownInput({ componentName, inputFor, items, labelTex
     const itemListRef = useRef<HTMLUListElement>(null); // For navigating the ul
     const inputRef = useRef<HTMLInputElement>(null); // Used to put back focus on input element
     const listIndex = useRef(-1); // For applying CSS styling to highlight the current focues (button) element
-    const { getValue, setValue } = useContext(FormContext);
+    const { getValue, setValue, getError } = useContext(FormContext);
     const value = getValue(inputFor);
-    const errorObj = RegisterModel.getError(value?.errors);
+    const errorObj = getError(value?.errors);
 
     const cachedClickCloseItemList = useCallback((e: MouseEvent): void => {
         // To make the menu close by clicking outside its area
@@ -99,13 +98,13 @@ export default function DropdownInput({ componentName, inputFor, items, labelTex
     return (
         <div className={[`${componentName}_${inputFor}InputDiv`, styles.dropdownContainer].join(' ')}>
             <label htmlFor={`${inputFor}Input-id`} className={styles.stateLabel}>
-                {labelText}{errorObj ? ' *' : ''}
+                {labelText}{errorObj?.isError ? ' *' : ''}
             </label>
             <input
                 ref={inputRef}
                 id={`${inputFor}Input-id`}
                 type="text"
-                className={errorObj ? [styles.dropdownInput, 'errorOutline'].join(' ') : styles.dropdownInput}
+                className={errorObj?.isError ? [styles.dropdownInput, 'errorOutline'].join(' ') : styles.dropdownInput}
                 name={inputFor}
                 value={value?.value ?? ''}
                 onChange={handleUserInput}
@@ -127,7 +126,7 @@ export default function DropdownInput({ componentName, inputFor, items, labelTex
                     </li>
                 )}
             </ul>
-            {errorObj && <div className={styles.incorrectInputErrorMsg}>{ errorObj?.errorMsg }</div>}
+            {errorObj?.isError && <div className={styles.incorrectInputErrorMsg}>{ errorObj?.errorMsg }</div>}
         </div>
     )
 }

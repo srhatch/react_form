@@ -2,13 +2,12 @@ import styles from './DateInput.module.scss';
 import { DateInputProps } from '../../types/interfaces';
 import { useState, useContext } from 'react';
 import { FormContext } from '../form_context/page';
-import { RegisterModel } from '../form_context/register_model';
 
 export default function DateInput({ componentName, inputFor, labelText, dateFormat }: DateInputProps) {
     const [keyValue, setKeyValue] = useState('');
-    const { getValue, setValue } = useContext(FormContext);
+    const { getValue, setValue, getError } = useContext(FormContext);
     const value = getValue(inputFor);
-    const errorObj = RegisterModel.getError(value?.errors);
+    const errorObj = getError(value?.errors);
 
     function handleGetKey(e: React.KeyboardEvent<HTMLInputElement>) {
         // Gets the key string for handleUserInput (which is an onChange handler)
@@ -43,10 +42,10 @@ export default function DateInput({ componentName, inputFor, labelText, dateForm
             <label
                 htmlFor={`${componentName}-${inputFor}Id`}
                 className={styles.dateLabel}
-            >{labelText}{errorObj ? ' *' : ''}</label>
+            >{labelText}{errorObj?.isError ? ' *' : ''}</label>
             <input
                 id={`${componentName}-${inputFor}Id`}
-                className={errorObj ? [styles.dateInput, 'errorOutline'].join(' ') : styles.dateInput}
+                className={errorObj?.isError ? [styles.dateInput, 'errorOutline'].join(' ') : styles.dateInput}
                 type='text'
                 inputMode='numeric'
                 name={inputFor}
@@ -56,7 +55,7 @@ export default function DateInput({ componentName, inputFor, labelText, dateForm
                 onKeyDown={handleGetKey}
                 onChange={handleUserInput}
             />
-            {errorObj && <div className={styles.dateErrorMsg}>{ errorObj?.errorMsg }</div>}
+            {errorObj?.isError && <div className={styles.dateErrorMsg}>{ errorObj?.errorMsg }</div>}
         </div>
     )
 }

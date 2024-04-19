@@ -2,16 +2,15 @@ import styles from './DropdownFieldset.module.scss';
 import { DropdownFieldsetProps } from '../../types/interfaces';
 import { useState, useRef, useContext, useCallback, useEffect } from 'react';
 import { FormContext } from '../form_context/page';
-import { RegisterModel } from '../form_context/register_model';
 
 export default function DropdownFieldset({ componentName, inputFor, buttonText, items }: DropdownFieldsetProps) {
     const [isListHidden, setIsListHidden] = useState(true);
     const menuButtonRef = useRef<HTMLButtonElement>(null); // Mainly used for focusing
     const itemListRef = useRef<HTMLUListElement>(null); // DOM entry point for navigating the list of items
     const listIndex = useRef(-1); // Keep track of which li has focus
-    const { getValue, setValue } = useContext(FormContext);
+    const { getValue, setValue, getError } = useContext(FormContext);
     const value = getValue(inputFor);
-    const errorObj = RegisterModel.getError(value?.errors);
+    const errorObj = getError(value?.errors);
 
     const cachedClickCloseEvent = useCallback(
         (e: MouseEvent): void => {
@@ -91,13 +90,13 @@ export default function DropdownFieldset({ componentName, inputFor, buttonText, 
                 <button
                     ref={menuButtonRef}
                     type='button'
-                    className={ errorObj ? [styles.openMenuButton, 'errorOutline'].join(' ') : styles.openMenuButton}
+                    className={ errorObj?.isError ? [styles.openMenuButton, 'errorOutline'].join(' ') : styles.openMenuButton}
                     onKeyDown={(e) => {
                         handleArrowNav(e);
                         handleTabNav(e);
                     }}
                     onClick={handleMenuClick}
-                >{value?.value || buttonText}{errorObj ? ' *' : ''}</button>
+                >{value?.value || buttonText}{errorObj?.isError ? ' *' : ''}</button>
                 {
                     !isListHidden &&
                     <ul ref={itemListRef} className={styles.itemList}>
@@ -116,7 +115,7 @@ export default function DropdownFieldset({ componentName, inputFor, buttonText, 
                     </ul>
                 }
             </fieldset>
-            {errorObj && <div className='errorMsg'>{errorObj?.errorMsg}</div>}
+            {errorObj?.isError && <div className='errorMsg'>{errorObj?.errorMsg}</div>}
         </div>
     )
 }

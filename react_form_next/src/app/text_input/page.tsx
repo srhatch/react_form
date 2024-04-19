@@ -2,14 +2,13 @@ import styles from './TextInput.module.scss'; // For text input styles
 import { useContext } from 'react';
 import { TextInputProps } from '../../types/interfaces';
 import { FormContext } from '../form_context/page';
-import { RegisterModel } from '../form_context/register_model';
 
 export default function TextInput({ componentName, inputFor, labelText, inputMode, isPassword}: TextInputProps) {
-    const { getValue, setValue } = useContext(FormContext);
+    const { getValue, setValue, getError } = useContext(FormContext);
     const value = getValue(inputFor);
-    const errorObj = RegisterModel.getError(value?.errors);
+    const errorObj = getError(value?.errors);
     const baseIdentity = `${componentName}_${inputFor}`;
-    const inputClass = generateInputClass(baseIdentity, errorObj?.errorFor);
+    const inputClass = generateInputClass(baseIdentity, errorObj?.isError);
     const labelClass = generateLabelClass(baseIdentity);
 
     function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -21,7 +20,7 @@ export default function TextInput({ componentName, inputFor, labelText, inputMod
             <label
                 htmlFor={`${baseIdentity}Id`}
                 className={labelClass}
-            >{labelText}{errorObj ? ' *' : ''}</label>
+            >{labelText}{errorObj?.isError ? ' *' : ''}</label>
             <input
                 id={`${baseIdentity}Id`}
                 className={inputClass}
@@ -31,16 +30,16 @@ export default function TextInput({ componentName, inputFor, labelText, inputMod
                 type={isPassword ? 'password' : 'text'}
                 onChange={handleInputChange}
             ></input>
-            {errorObj?.errorFor && <div className={styles.textInputErrorMsg}>{errorObj?.errorMsg}</div>}
+            {errorObj?.isError && <div className={styles.textInputErrorMsg}>{errorObj?.errorMsg}</div>}
         </div>        
     )
 }
 
-function generateInputClass(baseIdentity: string, errorFor: string | undefined) {
+function generateInputClass(baseIdentity: string, isError: string | undefined) {
     const baseInputClass = 'textInput'; // Used for input component styling
     const componentSpecificClass = `${baseIdentity}Input`; // Used for global styling (mainly positioning on page)
     const classArray = [styles[baseInputClass], componentSpecificClass];
-    if (errorFor) classArray.push('errorOutline'); // Error styling
+    if (isError) classArray.push('errorOutline'); // Error styling
     return classArray.join(' ');
 }
 
