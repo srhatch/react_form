@@ -1,7 +1,7 @@
 'use client';
 import styles from './FormContext.module.scss';
 import { createContext, useState, useCallback } from 'react';
-import { ValidatingFormProps, InputObject } from '../../types/interfaces';
+import { ValidatingFormProps, InputObject, ErrorObject } from '../../types/interfaces';
 import { RegisterModel } from './register_model';
 
 export const FormContext = createContext(Object.create({}));
@@ -29,10 +29,20 @@ export default function ValidatingFormContext({ children, fetchFunction }: Valid
         }, [setInputValues]
     )
 
+    const getError = useCallback((errors: ErrorObject[]) => {
+        // Returns the first error (if there is one) from the error array for a given property
+        if (errors?.length > 0) {
+            return errors[0]
+        } else {
+            return undefined;
+        }
+    }, [])
+
     const formMethods = {
         getValue: getValue,
         setValue: setValue,
-        deleteValue: deleteValue
+        deleteValue: deleteValue,
+        getError: getError
     };
 
     function handleRegisterSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
