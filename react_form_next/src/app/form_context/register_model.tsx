@@ -24,15 +24,6 @@ export class RegisterModel {
         this.dob = inputObj.dob ?? {value: '', errors: []};
     }
 
-    static getError(errorArray: ErrorObject[]) {
-        // Interface for input components to check whether there are validation errors
-        // If so, the first error is returned
-        if (errorArray?.length > 0) {
-            return errorArray[0]
-        } else {
-            return undefined;
-        }
-    }
     static checkAnyErrors(inputObj: InputObject) {
         // Interface for form component to check presence of any error
         // If so, UI error signaling can be displayed
@@ -45,14 +36,14 @@ export class RegisterModel {
     checkMissing() {
         for (let prop in this) {
             if (!this[prop]?.value) {
-                this[prop].errors.push({errorFor: `${prop}Missing`});
+                this[prop].errors.push({isError: true});
             }
         }
     }
     checkUsernameFormat() {
         if (this.username?.value?.endsWith('.com')) {
             this.username.errors.push({
-                errorFor: 'usernameFormatError',
+                isError: true,
                 errorMsg: 'Username cannot end with ".com"'
             })
         };
@@ -65,7 +56,7 @@ export class RegisterModel {
             const isValid = emailRegex.test(this.email.value);
             if (!isValid) {
                 this.email.errors.push({
-                    errorFor: 'emailFormatError',
+                    isError: true,
                     errorMsg: 'Email must be in correct format'
                 });
             }
@@ -74,7 +65,7 @@ export class RegisterModel {
     checkPasswordMatch() {
         if (this.password?.value !== this.passwordConfirm?.value) {
             this.passwordConfirm.errors.push({
-                errorFor: 'passwordMatchError',
+                isError: true,
                 errorMsg: 'Passwords must match'
             });
         }
@@ -82,7 +73,7 @@ export class RegisterModel {
     checkPasswordLength() {
         if (this.password?.value?.length < 8) {
             this.password.errors.push({
-                errorFor: 'passwordLengthError',
+                isError: true,
                 errorMsg: 'Password must be at least 8 characters'
             });
         }
@@ -92,7 +83,7 @@ export class RegisterModel {
         // Checks whether user input exists in that list
         if (this.state?.value && !fullList.includes(this.state?.value)) {
             this.state.errors.push({
-                errorFor: 'incorrectDropdownInput',
+                isError: true,
                 errorMsg: 'Please enter a valid state'
             });
         }
@@ -101,7 +92,7 @@ export class RegisterModel {
         // If date input is too short then it can't be valid
         if (this.dob?.value?.length < 10) {
             this.dob.errors.push({
-                errorFor: 'dateLengthError',
+                isError: true,
                 errorMsg: 'Please enter valid date (MM/DD/YYYY)'
             });
         }
@@ -111,7 +102,7 @@ export class RegisterModel {
         const currentDate = new Date();
         if (currentDate < inputDate) {
             this.dob.errors.push({
-                errorFor: 'invalidDateError',
+                isError: true,
                 errorMsg: 'Date must be before today'
             });
         }
