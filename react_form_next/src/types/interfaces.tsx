@@ -5,7 +5,7 @@ export interface InputObject {
     errors: ErrorObject[];
 }
 export interface ErrorObject {
-    errorFor: string;
+    isError: boolean;
     errorMsg: string;
 }
 
