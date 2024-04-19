@@ -5,7 +5,7 @@ import { FormContext } from '../form_context/page';
 
 export default function DateInput({ componentName, inputFor, labelText, dateFormat }: DateInputProps) {
     const [keyValue, setKeyValue] = useState('');
-    const { getValue, setValue, getError } = useContext(FormContext);
+    const { getValue, dispatch, getError } = useContext(FormContext);
     const value = getValue(inputFor);
     const errorObj = getError(value?.errors);
 
@@ -21,18 +21,18 @@ export default function DateInput({ componentName, inputFor, labelText, dateForm
             // Runs if any number key is pressed
             if (inputValue.length === 2 || inputValue.length === 5) {
                 // Automatically add a /
-                setValue(inputFor, (inputValue + '/'));
+                dispatch({type: 'setValue', payload: [{name: inputFor, value: (inputValue + '/')}]});
             } else if (inputValue.length > 10) {
                 e.preventDefault(); // Maximum length reached, prevent any further keypresses
             } else {
-                setValue(inputFor, inputValue);
+                dispatch({type: 'setValue', payload: [{name: inputFor, value: inputValue}]});
             }
         } else if (keyValue === 'Backspace') {
             // Deletes the slash automatically if deleting starts from from a '/'
             if (inputValue.length === 5 || inputValue.length === 2) {
-                setValue(inputFor, (inputValue.substring(0, inputValue.length - 1)));
+                dispatch({type: 'setValue', payload: [{name: inputFor, value: (inputValue.substring(0, inputValue.length - 1))}]});
             } else {
-                setValue(inputFor, inputValue);
+                dispatch({type: 'setValue', payload: [{name: inputFor, value: inputValue}]});
             }
         }
     }

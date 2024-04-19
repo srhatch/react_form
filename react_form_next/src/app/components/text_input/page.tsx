@@ -4,7 +4,7 @@ import { TextInputProps } from '../../../types/interfaces';
 import { FormContext } from '../form_context/page';
 
 export default function TextInput({ componentName, inputFor, labelText, inputMode, isPassword}: TextInputProps) {
-    const { getValue, setValue, getError } = useContext(FormContext);
+    const { getValue, dispatch, getError } = useContext(FormContext);
     const value = getValue(inputFor);
     const errorObj = getError(value?.errors);
     const baseIdentity = `${componentName}_${inputFor}`;
@@ -12,7 +12,7 @@ export default function TextInput({ componentName, inputFor, labelText, inputMod
     const labelClass = generateLabelClass(baseIdentity);
 
     function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-        setValue(inputFor, e.target.value);
+        dispatch({type: 'setValue', payload: [{name: inputFor, value: e.target.value}]});
     }
 
     return (

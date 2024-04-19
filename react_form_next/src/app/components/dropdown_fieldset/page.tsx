@@ -8,7 +8,7 @@ export default function DropdownFieldset({ componentName, inputFor, buttonText, 
     const menuButtonRef = useRef<HTMLButtonElement>(null); // Mainly used for focusing
     const itemListRef = useRef<HTMLUListElement>(null); // DOM entry point for navigating the list of items
     const listIndex = useRef(-1); // Keep track of which li has focus
-    const { getValue, setValue, getError } = useContext(FormContext);
+    const { getValue, dispatch, getError } = useContext(FormContext);
     const value = getValue(inputFor);
     const errorObj = getError(value?.errors);
 
@@ -50,9 +50,9 @@ export default function DropdownFieldset({ componentName, inputFor, buttonText, 
     function handleItemSelect(e: React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
         e.stopPropagation();
-        setValue(inputFor, (e.target as HTMLButtonElement).value);
         (menuButtonRef.current as HTMLButtonElement).focus();
         setIsListHidden(true);
+        dispatch({type: 'setValue', payload: [{name: inputFor, value: (e.target as HTMLButtonElement).value}]})
     }
 
     function handleArrowNav(e: React.KeyboardEvent<HTMLButtonElement>) {

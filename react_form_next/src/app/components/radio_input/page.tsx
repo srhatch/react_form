@@ -5,13 +5,13 @@ import { FormContext } from '../form_context/page';
 
 export default function RadioInput({ componentName, inputFor, labelText, items }: RadioInputProps) {
     const [isSelected, setIsSelected] = useState<string>(''); // Determines CSS styling
-    const { getValue, setValue, getError } = useContext(FormContext);
+    const { getValue, dispatch, getError } = useContext(FormContext);
     const value = getValue(inputFor);
     const errorObj = getError(value?.errors);
 
     function handleRadioClick(e: React.MouseEvent<HTMLButtonElement>, item: string) {
         e.preventDefault();
-        setValue(inputFor, item);
+        dispatch({type: 'setValue', payload: [{name: inputFor, value: item}]});
         setIsSelected(item);
     }
 

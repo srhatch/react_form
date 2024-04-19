@@ -9,7 +9,7 @@ export default function DropdownInput({ componentName, inputFor, items, labelTex
     const itemListRef = useRef<HTMLUListElement>(null); // For navigating the ul
     const inputRef = useRef<HTMLInputElement>(null); // Used to put back focus on input element
     const listIndex = useRef(-1); // For applying CSS styling to highlight the current focues (button) element
-    const { getValue, setValue, getError } = useContext(FormContext);
+    const { getValue, dispatch, getError } = useContext(FormContext);
     const value = getValue(inputFor);
     const errorObj = getError(value?.errors);
 
@@ -42,7 +42,7 @@ export default function DropdownInput({ componentName, inputFor, items, labelTex
     function handleUserInput(e: React.ChangeEvent<HTMLInputElement>) {
         e.target.value.length > 0 ? setIsListHidden(false) : setIsListHidden(true); // Display the list if the user types anything
         listIndex.current = -1; // Reset the index used for keyboard navigation
-        setValue('state', e.target.value); // Display what the user types real-time
+        dispatch({type: 'setValue', payload: [{name: 'state', value: e.target.value}]}); // Display what the user types real-time
 
         // Filter the list based on what the user has typed and store it in state
         let filteredList = items.filter(item => item.toLowerCase().startsWith(e.target.value.toLowerCase()));
@@ -51,15 +51,14 @@ export default function DropdownInput({ componentName, inputFor, items, labelTex
 
     function handleItemSelection(e: React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
-        setValue(inputFor, (e.target as HTMLButtonElement).value);
+        dispatch({type: 'setValue', payload: [{name: 'state', value: (e.target as HTMLButtonElement).value}]}); // Display what the user types real-time
         inputRef.current?.focus();
         setIsListHidden(true);
         listIndex.current = -1; // Reset so when the user starts deleting text the old index won't cause that <li> to highlight
     }
 
     function handleReopenList(e: React.FocusEvent<HTMLInputElement>) {
-        e.stopPropagation();
-        if (value?.length > 0) {
+        if (value.value?.length > 0) {
             // Only open if text is present
             setIsListHidden(false);
         }
