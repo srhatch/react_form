@@ -20,6 +20,14 @@ This shape ensures that error information is paired with the input value that ca
 
 The DropdownInput component takes in a list of string items that will be used as the menu options. On submission, the input should be checked against this list to ensure that the input is a valid option (in this example that is done with the checkDropdownInput method).
 
+The deleteValue function isn't used in this particular demo, but could be used (by changing the logic slightly) for input components that have multiple selections, like file inputs.
+
+Edit 4/19/24:
+I changed the structure so that the ValidatingForm component can take in a function that will be called when the form submits. This takes the place of the RegisterModel and makes the component more extensible. The only thing the form component cares about is that the function returns an array with two values: a boolean indicating the presence of any errors, and an instance of the inputValues object. The way in which those values are calculated can now be left up to individual implementation (functional or OOP).
+
+
+I added a separate branch called reducer-form-function that restructures the form component to use a reducer for the setValue and deleteValue functions. I didn't merge it because it didn't seem to improve the structure too much given that the functionality wasn't too complicated to begin with, but in the event that more functionality, or more complex functionality, is added to the form context it would make sense to develop further with this branch.
+
 
 Functionality can be examined by running the next dev server:
 Change directory to react_form_next
