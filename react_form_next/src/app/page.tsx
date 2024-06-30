@@ -6,6 +6,7 @@ import DropdownInput from './components/dropdown_input/page';
 import DropdownFieldset from './components/dropdown_fieldset/page';
 import RadioInput from './components/radio_input/page';
 import DateInput from './components/date_input/page';
+import DateSelector from './components/date_selector/page';
 import { processSubmit } from '../utilities/utils';
 // import { fetchFunction } from 'route/to/data/service';
 
@@ -70,6 +71,11 @@ export default function Register() {
           inputFor='accountType'
           labelText='Account type'
           items={['basic', 'premium']}
+        />
+        <DateSelector
+          componentName='register'
+          inputFor='expectedDate'
+          labelText='Expected date'
         />
     </ValidatingFormContext>
   )
