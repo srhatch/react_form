@@ -24,6 +24,7 @@ export interface ValidatingFormProps {
 
 // Base interface for repeated component props.
 export interface ComponentProps {
+    children?: JSX.Element|JSX.Element[];
     componentName: string; // determines component-specific classNames
     inputFor: string; // determines input-specific label text, classNames, and name attribute
 }
@@ -56,4 +57,9 @@ export interface DateInputProps extends ComponentProps {
 
 export interface DateSelectorProps extends ComponentProps {
     labelText: string;
+}
+
+// Info content interface
+export interface InfoProps {
+    infoContent: string;
 }
