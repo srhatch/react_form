@@ -55,3 +55,7 @@ export interface DateInputProps extends ComponentProps {
     labelText: string;
     dateFormat: string;
 }
+
+export interface DateSelectorProps extends ComponentProps {
+    labelText: string;
+}
