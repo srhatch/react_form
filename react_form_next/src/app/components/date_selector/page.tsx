@@ -5,7 +5,7 @@ import { useContext } from 'react';
 import { FormContext } from '../form_context/page';
 import { DateSelectorProps } from '../../../types/interfaces';
 
-export default function DateSelector({ componentName, inputFor, labelText }: DateSelectorProps) {
+export default function DateSelector({ children, componentName, inputFor, labelText }: DateSelectorProps) {
     const { getValue, setValue, getError } = useContext(FormContext);
     const valueObj = getValue(inputFor);
     const errorObj = getError(valueObj?.errors);
@@ -15,7 +15,7 @@ export default function DateSelector({ componentName, inputFor, labelText }: Dat
             <label
                 htmlFor={`${componentName}-${inputFor}Id`}
                 className={styles.dateSelectorLabel}
-            >{labelText}{errorObj?.isError ? ' *' : ''}</label>
+            >{labelText}{errorObj?.isError ? ' *' : ''}{children}</label>
             <DatePicker
                 id={`${componentName}-${inputFor}Id`}
                 className={errorObj?.isError ? [styles.dateSelectorInput, 'errorOutline'].join(' ') : styles.dateSelectorInput}
