@@ -7,6 +7,7 @@ import DropdownFieldset from './components/dropdown_fieldset/page';
 import RadioInput from './components/radio_input/page';
 import DateInput from './components/date_input/page';
 import DateSelector from './components/date_selector/page';
+import Info from './components/info/page';
 import { processSubmit } from '../utilities/utils';
 // import { fetchFunction } from 'route/to/data/service';
 
@@ -76,7 +77,9 @@ export default function Register() {
           componentName='register'
           inputFor='expectedDate'
           labelText='Expected date'
-        />
+        >
+          <Info infoContent='This is just an example of how this component might be used, hence the vague "expected date" name'/>
+        </DateSelector>
     </ValidatingFormContext>
   )
 }
