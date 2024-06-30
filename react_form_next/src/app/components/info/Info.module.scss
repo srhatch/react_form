@@ -1,0 +1,28 @@
+.infoContainer {
+    position: relative;
+    margin-left: 0.5em;
+}
+.infoButton {
+    background-color: white;
+    font-size: 1rem;
+    outline: none;
+    height: 1.25em;
+    width: 1.25em;
+    padding-block-start: 0;
+    padding-block-end: 0;
+    padding-inline-start: 0;
+    padding-inline-end: 0;
+    border: 0.5px solid black;
+    border-radius: 30em;
+}
+.infoContent{
+    position: absolute;
+    bottom: 0em;
+    left: 1.5em;
+    z-index: 1;
+    width: 10em;
+    padding: 0.5em;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    background-color: white;
+}
