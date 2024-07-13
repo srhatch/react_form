@@ -72,6 +72,9 @@ export default function DropdownFieldset({ componentName, inputFor, buttonText, 
                 // if list is open track navigation with listIndex
                 listIndex.current++;
                 (itemListRef.current?.children[listIndex.current]?.firstElementChild as HTMLElement).focus();
+            } else if (listIndex.current === items?.length - 1) {
+                listIndex.current = 0;
+                (itemListRef.current?.children[listIndex.current]?.firstElementChild as HTMLElement).focus();
             }
         }
     }
@@ -79,6 +82,7 @@ export default function DropdownFieldset({ componentName, inputFor, buttonText, 
     function handleTabNav(e: React.KeyboardEvent<HTMLButtonElement>) {
         // Tab navigation will put focus on previous or next element, so close the list if it's open
         if ((e.shiftKey && e.key === 'Tab') || e.key === 'Tab') {
+            if (listIndex.current > -1) listIndex.current = -1;
             if (!isListHidden) setIsListHidden(true);
         }
     }
@@ -107,7 +111,10 @@ export default function DropdownFieldset({ componentName, inputFor, buttonText, 
                                         className={styles.itemButton}
                                         value={item}
                                         onClick={handleItemSelect}
-                                        onKeyDown={handleArrowNav}
+                                        onKeyDown={(e) => {
+                                            handleArrowNav(e);
+                                            handleTabNav(e);
+                                        }}
                                     >{item}</button>
                                 </li>
                             )
