@@ -96,7 +96,7 @@ export default function DropdownInput({ componentName, inputFor, items, labelTex
     }
 
     return (
-        <div className={[`${componentName}_${inputFor}InputDiv`, styles.dropdownContainer].join(' ')}>
+        <div className={[`${componentName}_${inputFor}InputDiv`, styles.dropdownContainer].join(' ')} data-testid='dropdown-container'>
             <label htmlFor={`${inputFor}Input-id`} className={styles.stateLabel}>
                 {labelText}{errorObj?.isError ? ' *' : ''}
             </label>
@@ -114,7 +114,12 @@ export default function DropdownInput({ componentName, inputFor, items, labelTex
                 }}
                 onFocus={handleReopenList}
             />
-            <ul ref={itemListRef} className={styles.dropdownList} hidden={itemList.length === 0 || isListHidden}>
+            <ul
+                ref={itemListRef}
+                className={styles.dropdownList}
+                hidden={itemList.length === 0 || isListHidden}
+                role='listbox'
+            >
                 {itemList?.map(item =>
                     <li key={item}>
                         <button
