@@ -103,7 +103,11 @@ export default function DropdownFieldset({ componentName, inputFor, buttonText, 
                 >{value?.value || buttonText}{errorObj?.isError ? ' *' : ''}</button>
                 {
                     !isListHidden &&
-                    <ul ref={itemListRef} className={styles.itemList}>
+                    <ul
+                        ref={itemListRef}
+                        className={styles.itemList}
+                        role='listbox'
+                    >
                         {items.map(item => {
                             return (
                                 <li key={item}>
