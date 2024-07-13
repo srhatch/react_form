@@ -54,6 +54,8 @@ export default function DateInput({ componentName, inputFor, labelText, dateForm
                 placeholder={dateFormat}
                 onKeyDown={handleGetKey}
                 onChange={handleUserInput}
+                aria-required='true'
+                aria-invalid={errorObj.isError ? 'true' : 'false'}
             />
             {errorObj?.isError && <div className={styles.dateErrorMsg}>{ errorObj?.errorMsg }</div>}
         </div>

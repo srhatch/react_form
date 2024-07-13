@@ -37,6 +37,8 @@ export default function RadioInput({ componentName, inputFor, labelText, items }
                     type="hidden"
                     name={inputFor}
                     value={value?.value ?? ''}
+                    aria-required='true'
+                    aria-invalid={errorObj.isError ? 'true' : 'false'}
                 />
             </fieldset>
         </div>

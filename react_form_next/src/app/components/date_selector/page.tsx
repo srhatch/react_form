@@ -20,8 +20,16 @@ export default function DateSelector({ children, componentName, inputFor, labelT
                 id={`${componentName}-${inputFor}Id`}
                 className={errorObj?.isError ? [styles.dateSelectorInput, 'errorOutline'].join(' ') : styles.dateSelectorInput}
                 name={inputFor}
-                selected={valueObj?.value ?? new Date()}
+                selected={valueObj?.value ?? ''}
                 onChange={(value: Date | null) => setValue(inputFor, value)}
+                preventOpenOnFocus={true}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                        (e.target as HTMLInputElement).click();
+                    }
+                }}
+                ariaRequired='true'
+                ariaInvalid={errorObj.isError ? 'true' : 'false'}
             />
         </div>
     )

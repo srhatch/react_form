@@ -113,6 +113,8 @@ export default function DropdownInput({ componentName, inputFor, items, labelTex
                     handleTabNav(e);
                 }}
                 onFocus={handleReopenList}
+                aria-required='true'
+                aria-invalid={errorObj.isError ? 'true' : 'false'}
             />
             <ul
                 ref={itemListRef}

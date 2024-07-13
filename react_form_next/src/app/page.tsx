@@ -1,5 +1,5 @@
 'use client';
-import { states } from '../data/stateList'; // Prop value for dropdown list
+import states from '../data/stateList'; // Prop value for dropdown list
 import ValidatingFormContext from './components/form_context/page';
 import TextInput from './components/text_input/page';
 import DropdownInput from './components/dropdown_input/page';

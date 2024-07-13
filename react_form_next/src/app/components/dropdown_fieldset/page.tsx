@@ -90,7 +90,13 @@ export default function DropdownFieldset({ componentName, inputFor, buttonText, 
     return (
         <div className={[styles.fieldsetContainer, `${componentName}-fieldsetContainer`].join(' ')}>
             <fieldset>
-                <input type='hidden' name={inputFor} value={value?.value ?? ''} />
+                <input
+                    type='hidden'
+                    name={inputFor}
+                    value={value?.value ?? ''}
+                    arai-required='true'
+                    aria-invalid={errorObj.isError ? 'true' : 'false'}
+                />
                 <button
                     ref={menuButtonRef}
                     type='button'
