@@ -30,7 +30,7 @@ export default function TextInput({ componentName, inputFor, labelText, inputMod
                 type={isPassword ? 'password' : 'text'}
                 onChange={handleInputChange}
                 aria-required='true'
-                aria-invalid={errorObj.isError ? 'true' : 'false'}
+                aria-invalid={errorObj?.isError ? 'true' : 'false'}
             ></input>
             {errorObj?.isError && <div className={styles.textInputErrorMsg}>{errorObj?.errorMsg}</div>}
         </div>        

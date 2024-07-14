@@ -114,7 +114,7 @@ export default function DropdownInput({ componentName, inputFor, items, labelTex
                 }}
                 onFocus={handleReopenList}
                 aria-required='true'
-                aria-invalid={errorObj.isError ? 'true' : 'false'}
+                aria-invalid={errorObj?.isError ? 'true' : 'false'}
             />
             <ul
                 ref={itemListRef}

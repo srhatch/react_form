@@ -95,7 +95,7 @@ export default function DropdownFieldset({ componentName, inputFor, buttonText, 
                     name={inputFor}
                     value={value?.value ?? ''}
                     arai-required='true'
-                    aria-invalid={errorObj.isError ? 'true' : 'false'}
+                    aria-invalid={errorObj?.isError ? 'true' : 'false'}
                 />
                 <button
                     ref={menuButtonRef}

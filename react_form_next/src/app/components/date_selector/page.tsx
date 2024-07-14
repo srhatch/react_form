@@ -29,7 +29,7 @@ export default function DateSelector({ children, componentName, inputFor, labelT
                     }
                 }}
                 ariaRequired='true'
-                ariaInvalid={errorObj.isError ? 'true' : 'false'}
+                ariaInvalid={errorObj?.isError ? 'true' : 'false'}
             />
         </div>
     )
