@@ -5,7 +5,7 @@ import { ValidatingFormProps, ErrorObject, FormInputValues } from '../../../type
 
 export const FormContext = createContext(Object.create({}));
 
-export default function ValidatingFormContext({ children, processSubmit, fetchFunction }: ValidatingFormProps) {
+export default function ValidatingFormContext({ children, processSubmit, submitButtonValue, fetchFunction }: ValidatingFormProps) {
     // Provides setter and getter functions to its children to update the inputValues object
     // Wrap form inputs in this component
     const [inputValues, setInputValues] = useState<FormInputValues>({});
@@ -72,7 +72,7 @@ export default function ValidatingFormContext({ children, processSubmit, fetchFu
                 aria-labelledby='formHeadingId'
             >
                 {children}
-                <input type='submit' className={styles.submitButton} value='Register' />
+                <input type='submit' className={styles.submitButton} value={submitButtonValue} />
                 {checkAnyErrors() && <div className='missingPrompt'>* Please fix any errors</div>}
             </form>
         </FormContext.Provider>

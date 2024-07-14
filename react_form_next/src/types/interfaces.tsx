@@ -19,6 +19,7 @@ export interface ErrorObject {
 export interface ValidatingFormProps {
     children: JSX.Element|JSX.Element[];
     processSubmit: (inputObject: any) => (boolean | any)[];
+    submitButtonValue: string;
     fetchFunction: undefined;
 }
 

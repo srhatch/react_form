@@ -13,7 +13,7 @@ import { processSubmit } from '../utilities/utils';
 
 export default function Register() {
   return (
-    <ValidatingFormContext fetchFunction={undefined} processSubmit={processSubmit}>
+    <ValidatingFormContext fetchFunction={undefined} processSubmit={processSubmit} submitButtonValue='Register'>
         <TextInput
           componentName='register'
           inputFor='username'
