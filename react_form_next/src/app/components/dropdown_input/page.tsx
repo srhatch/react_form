@@ -97,7 +97,7 @@ export default function DropdownInput({ componentName, inputFor, items, labelTex
 
     return (
         <div className={[`${componentName}_${inputFor}InputDiv`, styles.dropdownContainer].join(' ')} data-testid='dropdown-container'>
-            <label htmlFor={`${inputFor}Input-id`} className={styles.stateLabel}>
+            <label htmlFor={`${inputFor}Input-id`} className={styles.dropdownInputLabel}>
                 {labelText}{errorObj?.isError ? ' *' : ''}
             </label>
             <input
