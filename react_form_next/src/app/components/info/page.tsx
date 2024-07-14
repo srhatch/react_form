@@ -7,6 +7,7 @@ export default function Info({ infoContent }: InfoProps) {
     return (
         <span className={styles.infoContainer}>
             <button
+                type='button'
                 className={styles.infoButton}
                 onMouseEnter={() => setInfoHidden(false)}
                 onMouseLeave={() => setInfoHidden(true)}

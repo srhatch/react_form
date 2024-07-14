@@ -22,12 +22,6 @@ export default function DateSelector({ children, componentName, inputFor, labelT
                 name={inputFor}
                 selected={valueObj?.value ?? ''}
                 onChange={(value: Date | null) => setValue(inputFor, value)}
-                preventOpenOnFocus={true}
-                onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                        (e.target as HTMLInputElement).click();
-                    }
-                }}
                 ariaRequired='true'
                 ariaInvalid={errorObj?.isError ? 'true' : 'false'}
             />

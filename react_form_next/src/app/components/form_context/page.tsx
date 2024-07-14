@@ -65,15 +65,15 @@ export default function ValidatingFormContext({ children, processSubmit, fetchFu
 
     return (
         <FormContext.Provider value={formMethods}>
-            <h1 id='register-formHeading'>Example form</h1>
+            <h1 id='formHeadingId' className={styles.formHeading}>Example form</h1>
             <form
                 className={styles.form}
                 onSubmit={handleRegisterSubmit}
-                aria-labelledby='register-formHeading'
+                aria-labelledby='formHeadingId'
             >
                 {children}
                 <input type='submit' className={styles.submitButton} value='Register' />
-                {checkAnyErrors() && <div className='register-missingPrompt'>* Please fix any errors</div>}
+                {checkAnyErrors() && <div className='missingPrompt'>* Please fix any errors</div>}
             </form>
         </FormContext.Provider>
     )

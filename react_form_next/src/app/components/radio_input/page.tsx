@@ -25,6 +25,7 @@ export default function RadioInput({ componentName, inputFor, labelText, items }
                     items?.map((item) => {
                         return (
                             <button
+                                type='button'
                                 key={item}
                                 className={isSelected === item ? [styles.radioButton, styles.selected].join(' ') : styles.radioButton}
                                 onClick={(e) => {handleRadioClick(e, item)}}
