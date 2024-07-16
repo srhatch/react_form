@@ -28,6 +28,7 @@ export default function TextInput({ componentName, inputFor, labelText, inputMod
                 value={value?.value ?? ''}
                 inputMode={inputMode}
                 type={isPassword ? 'password' : 'text'}
+                autoComplete={isPassword ? 'off' : 'on'}
                 onChange={handleInputChange}
                 aria-required='true'
                 aria-invalid={errorObj?.isError ? 'true' : 'false'}
