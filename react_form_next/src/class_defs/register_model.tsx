@@ -1,4 +1,5 @@
 import { InputObject, FormInputValues } from '../types/interfaces';
+import { checkErrors } from '../utilities/utils';
 import states from '../data/stateList';
 
 class RegisterModel {
@@ -123,24 +124,28 @@ class RegisterModel {
             }
         }
     }
-    checkErrors() {
+    validate() {
         // Interfaces with form component as a wrapper function
         // Returns true if any errors exist
         this.checkMissing();
-        this.checkUsernameFormat();
-        this.checkPasswordLength();
-        this.checkPasswordMatch();
-        this.checkEmailFormat();
-        this.checkDropdownInput(states);
-        this.checkDobLength();
-        this.checkDobValid();
-        this.checkExpectedDateValid();
-        const errorArray = Object.values(this).map(value => value.errors.length > 0); // An array of booleans to signal whether errors occurred
-        if (errorArray.some(item => item === true)) {
+        const isMissingErrors = checkErrors(this);
+        if (isMissingErrors) {
             return true;
         } else {
-            return false;
+            this.checkUsernameFormat();
+            this.checkPasswordLength();
+            this.checkPasswordMatch();
+            this.checkEmailFormat();
+            this.checkDropdownInput(states);
+            this.checkDobLength();
+            this.checkDobValid();
+            this.checkExpectedDateValid();
+            const isFormatErrors = checkErrors(this);
+            if (isFormatErrors) {
+                return true;
+            }
         }
+        return false;
     }
     makeDateObject(dateProp: string) {
         // Utility: convert date input string to a Date object
