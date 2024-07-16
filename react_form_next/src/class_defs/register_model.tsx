@@ -44,7 +44,6 @@ class RegisterModel {
     }
     checkEmailFormat() {
         // Basic email address validation
-        // This is a bug. it will always signal an error because isValid is undefined
         const emailAddress = this.email.value;
         let isValid = true;
         if (emailAddress.includes('@')) {
