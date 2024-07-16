@@ -14,8 +14,14 @@ export default function Info({ infoContent }: InfoProps) {
                 onFocus={() => setInfoHidden(false)}
                 onBlur={() => setInfoHidden(true)}
                 onClick={(e) => e.preventDefault()}
+                aria-expanded={infoHidden ? 'false' : 'true'}
+                aria-controls='info-container'
             >?</button>
-            <div className={styles.infoContent} hidden={infoHidden}>{infoContent}</div>
+            <div
+                id='info-container'
+                className={styles.infoContent}
+                hidden={infoHidden}
+            >{infoContent}</div>
         </span>
     )
 }
