@@ -1,7 +1,7 @@
 // Defines the object stored in inputValues state variable and in RegisterModel class properties
 export interface InputObject {
     [index: string]: any;
-    value: string | object;
+    value: string;
     errors: ErrorObject[];
 }
 
