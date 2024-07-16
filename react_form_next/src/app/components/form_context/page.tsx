@@ -2,6 +2,7 @@
 import styles from './FormContext.module.scss';
 import { createContext, useState, useCallback } from 'react';
 import { ValidatingFormProps, ErrorObject, FormInputValues } from '../../../types/interfaces';
+import { checkErrors } from '../../../utilities/utils';
 
 export const FormContext = createContext(Object.create({}));
 
@@ -54,15 +55,6 @@ export default function ValidatingFormContext({ children, processSubmit, submitB
         }
     }
 
-    function checkAnyErrors() {
-        // To display error message
-        for (let prop in inputValues) {
-            if (prop && inputValues[prop].errors.length > 0) {
-                return true;
-            }
-        }
-    }
-
     return (
         <FormContext.Provider value={formMethods}>
             <h1 id='formHeadingId' className={styles.formHeading}>Example form</h1>
@@ -73,7 +65,7 @@ export default function ValidatingFormContext({ children, processSubmit, submitB
             >
                 {children}
                 <input type='submit' className={styles.submitButton} value={submitButtonValue} />
-                {checkAnyErrors() && <div className='missingPrompt'>* Please fix any errors</div>}
+                {checkErrors(inputValues) && <div className='missingPrompt'>* Please fix any errors</div>}
             </form>
         </FormContext.Provider>
     )
