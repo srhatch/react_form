@@ -104,6 +104,7 @@ export default function DropdownInput({ componentName, inputFor, items, labelTex
                 ref={inputRef}
                 id={`${inputFor}Input-id`}
                 type="text"
+                autoComplete='off'
                 className={errorObj?.isError ? [styles.dropdownInput, 'errorOutline'].join(' ') : styles.dropdownInput}
                 name={inputFor}
                 value={value?.value ?? ''}
@@ -113,10 +114,15 @@ export default function DropdownInput({ componentName, inputFor, items, labelTex
                     handleTabNav(e);
                 }}
                 onFocus={handleReopenList}
+                role='combobox'
+                aria-controls='dropdown-input-ul'
+                aria-expanded={isListHidden ? 'false' : 'true'}
+                aria-autocomplete='list'
                 aria-required='true'
                 aria-invalid={errorObj?.isError ? 'true' : 'false'}
             />
             <ul
+                id='dropdown-input-ul'
                 ref={itemListRef}
                 className={styles.dropdownList}
                 hidden={itemList.length === 0 || isListHidden}
