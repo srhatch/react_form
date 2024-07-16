@@ -21,7 +21,7 @@ export default function DateSelector({ children, componentName, inputFor, labelT
                 className={errorObj?.isError ? [styles.dateSelectorInput, 'errorOutline'].join(' ') : styles.dateSelectorInput}
                 name={inputFor}
                 selected={valueObj?.value ?? ''}
-                onChange={(value: Date | null) => setValue(inputFor, value)}
+                onChange={(value: Date | null) => setValue(inputFor, value?.toString())}
                 ariaRequired='true'
                 ariaInvalid={errorObj?.isError ? 'true' : 'false'}
             />
