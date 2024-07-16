@@ -48,6 +48,7 @@ export default function DateInput({ componentName, inputFor, labelText, dateForm
                 className={errorObj?.isError ? [styles.dateInput, 'errorOutline'].join(' ') : styles.dateInput}
                 type='text'
                 inputMode='numeric'
+                autoComplete='on'
                 name={inputFor}
                 value={value?.value ?? ''}
                 maxLength={12}
