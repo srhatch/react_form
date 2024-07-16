@@ -94,7 +94,7 @@ export default function DropdownFieldset({ componentName, inputFor, buttonText, 
                     type='hidden'
                     name={inputFor}
                     value={value?.value ?? ''}
-                    arai-required='true'
+                    aria-required='true'
                     aria-invalid={errorObj?.isError ? 'true' : 'false'}
                 />
                 <button
@@ -106,10 +106,14 @@ export default function DropdownFieldset({ componentName, inputFor, buttonText, 
                         handleTabNav(e);
                     }}
                     onClick={handleMenuClick}
+                    aria-expanded={isListHidden ? 'false' : 'true'}
+                    aria-controls='dropdown-ul'
+                    aria-label={buttonText}
                 >{value?.value || buttonText}{errorObj?.isError ? ' *' : ''}</button>
                 {
                     !isListHidden &&
                     <ul
+                        id='dropdown-ul'
                         ref={itemListRef}
                         className={styles.itemList}
                         role='listbox'
