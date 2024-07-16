@@ -35,93 +35,89 @@ class RegisterModel {
         }
     }
     checkUsernameFormat() {
-        if (this.username.value && typeof this.username.value === 'string') {
-            if (this.username?.value?.endsWith('.com')) {
-                this.username.errors.push({
-                    isError: true,
-                    errorMsg: 'Username cannot end with ".com"'
-                })
-            };
-        }
+        if (this.username?.value?.endsWith('.com')) {
+            this.username.errors.push({
+                isError: true,
+                errorMsg: 'Username cannot end with ".com"'
+            })
+        };
     }
     checkEmailFormat() {
-        // Checks that an @ sign exists followed by at least one character
-        // followed by only 1 . (literal), followed by at least two characters (top level domain)
-        if (this.email.value && typeof this.email.value === 'string') {
-            const emailRegex = /(.+)(@)(.+)(\.{1})(.{2,})$/;
-            const isValid = emailRegex.test(this.email.value);
-            if (!isValid) {
-                this.email.errors.push({
-                    isError: true,
-                    errorMsg: 'Email must be in correct format'
-                });
+        // Basic email address validation
+        // This is a bug. it will always signal an error because isValid is undefined
+        const emailAddress = this.email.value;
+        let isValid = true;
+        if (emailAddress.includes('@')) {
+            const emailArray = emailAddress.split('@');
+            const domainRe = /^(?!.*[^\w-])/;
+            if (emailArray[0].length > 64) {
+                isValid = false;
+            } else if (emailArray[1].length > 255 || !domainRe.test(emailArray[1])) {
+                isValid = false;
             }
+        } else {
+            isValid = false;
+        }
+        if (!isValid) {
+            this.email.errors.push({
+                isError: true,
+                errorMsg: 'Email must be in correct format'
+            });
         }
     }
     checkPasswordMatch() {
-        if (this.password.value && this.passwordConfirm.value) {
-            if (this.password.value !== this.passwordConfirm.value) {
-                this.passwordConfirm.errors.push({
-                    isError: true,
-                    errorMsg: 'Passwords must match'
-                });
-            }
+        if (this.password.value !== this.passwordConfirm.value) {
+            this.passwordConfirm.errors.push({
+                isError: true,
+                errorMsg: 'Passwords must match'
+            });
         }
     }
     checkPasswordLength() {
-        if (this.password.value && typeof this.password.value === 'string') {
-            if (this.password?.value?.length < 8) {
-                this.password.errors.push({
-                    isError: true,
-                    errorMsg: 'Password must be at least 8 characters'
-                });
-            }
+        if (this.password?.value?.length < 8) {
+            this.password.errors.push({
+                isError: true,
+                errorMsg: 'Password must be at least 8 characters'
+            });
         }
     }
     checkDropdownInput(fullList: string[]) {
         // Pass in the list (array) that was passed to the dropdown input
         // Checks whether user input exists in that list
-        if (this.state.value && typeof this.state.value === 'string') {
-            if (this.state?.value && !fullList.includes(this.state?.value)) {
-                this.state.errors.push({
-                    isError: true,
-                    errorMsg: 'Please enter a valid state'
-                });
-            }
+        if (this.state?.value && !fullList.includes(this.state?.value)) {
+            this.state.errors.push({
+                isError: true,
+                errorMsg: 'Please enter a valid state'
+            });
         }
     }
     checkDobLength() {
         // If date input is too short then it can't be valid
-        if (this.dob.value && typeof this.dob.value === 'string') {
-            if (this.dob?.value?.length < 10) {
-                this.dob.errors.push({
-                    isError: true,
-                    errorMsg: 'Please enter valid date (MM/DD/YYYY)'
-                });
-            }
+        if (this.dob?.value?.length < 10) {
+            this.dob.errors.push({
+                isError: true,
+                errorMsg: 'Please enter valid date (MM/DD/YYYY)'
+            });
         }
     }
     checkDobValid() {
-        if (this.dob.value) {
-            const inputDate = this.makeDateObject('dob');
-            const currentDate = new Date();
-            if (currentDate < inputDate) {
-                this.dob.errors.push({
-                    isError: true,
-                    errorMsg: 'DOB must be before today'
-                });
-            }
+        const inputDate = this.makeDateObject('dob');
+        const currentDate = new Date();
+        if (currentDate < inputDate) {
+            this.dob.errors.push({
+                isError: true,
+                errorMsg: 'DOB must be before today'
+            });
         }
     }
     checkExpectedDateValid() {
-        if (this.expectedDate.value) {
-            const currentDate = new Date();
-            if (currentDate > this.expectedDate.value) {
-                this.expectedDate.errors.push({
-                    isError: true,
-                    errorMsg: 'Expected date must be after today'
-                });
-            }
+        const currentDate = new Date();
+        const expectedDate = new Date(this.expectedDate.value);
+        if (currentDate > expectedDate) {
+            this.expectedDate.errors.push({
+                isError: true,
+                errorMsg: 'Expected date must be after today'
+            });
         }
     }
     validate() {
