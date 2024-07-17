@@ -1,6 +1,6 @@
 'use client';
 import styles from './FormContext.module.scss';
-import { createContext, useState, useCallback } from 'react';
+import { createContext, useState, useCallback, useRef } from 'react';
 import { ValidatingFormProps, ErrorObject, FormInputValues } from '../../../types/interfaces';
 import { checkErrors } from '../../../utilities/utils';
 
@@ -10,6 +10,7 @@ export default function ValidatingFormContext({ children, processSubmit, submitB
     // Provides setter and getter functions to its children to update the inputValues object
     // Wrap form inputs in this component
     const [inputValues, setInputValues] = useState<FormInputValues>({});
+    const dialogRef = useRef(null);
 
     const setValue = useCallback(
         // Clear error array when user types so UI error signaling disappears
@@ -27,7 +28,7 @@ export default function ValidatingFormContext({ children, processSubmit, submitB
                 return {...inputObj};
             })
         }, [setInputValues]
-    )
+    );
 
     const getError = useCallback((errors: ErrorObject[]) => {
         // Returns the first error (if there is one) from the error array for a given property
@@ -36,7 +37,7 @@ export default function ValidatingFormContext({ children, processSubmit, submitB
         } else {
             return undefined;
         }
-    }, [])
+    }, []);
 
     const formMethods = {
         getValue: getValue,
@@ -51,6 +52,12 @@ export default function ValidatingFormContext({ children, processSubmit, submitB
         if (errors) {
             setInputValues(values);
         } else {
+            if (dialogRef.current) {
+                (dialogRef.current as HTMLDialogElement).show();
+                setTimeout(() => {
+                    dialogRef.current && (dialogRef.current as HTMLDialogElement).close();
+                }, 5000)
+            }
           // Fetch to API endpoint: fetchFunction(values);
         }
     }
@@ -65,6 +72,7 @@ export default function ValidatingFormContext({ children, processSubmit, submitB
                 {children}
                 <input type='submit' className={styles.submitButton} value={submitButtonValue} />
                 {checkErrors(inputValues) && <div className='missingPrompt'>Please fix any errors</div>}
+                <dialog className={styles.successDialog} ref={dialogRef}>Form submitted successfully!</dialog>
             </form>
         </FormContext.Provider>
     )
