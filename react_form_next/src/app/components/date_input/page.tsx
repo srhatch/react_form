@@ -42,7 +42,7 @@ export default function DateInput({ componentName, inputFor, labelText, dateForm
             <label
                 htmlFor={`${componentName}-${inputFor}Id`}
                 className={styles.dateLabel}
-            >{labelText}{errorObj?.isError ? ' *' : ''}</label>
+            >{labelText}</label>
             <input
                 id={`${componentName}-${inputFor}Id`}
                 className={errorObj?.isError ? [styles.dateInput, 'errorOutline'].join(' ') : styles.dateInput}
@@ -57,8 +57,9 @@ export default function DateInput({ componentName, inputFor, labelText, dateForm
                 onChange={handleUserInput}
                 aria-required='true'
                 aria-invalid={errorObj?.isError ? 'true' : 'false'}
+                aria-errormessage={errorObj?.isError ? `${inputFor}-errorMsg-id` : ''}
             />
-            {errorObj?.isError && <div className={styles.dateErrorMsg}>{ errorObj?.errorMsg }</div>}
+            {errorObj?.isError && <div id={`${inputFor}-errorMsg-id`} className={styles.dateErrorMsg}>{ errorObj?.errorMsg }</div>}
         </div>
     )
 }

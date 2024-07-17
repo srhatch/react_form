@@ -96,6 +96,7 @@ export default function DropdownFieldset({ componentName, inputFor, buttonText, 
                     value={value?.value ?? ''}
                     aria-required='true'
                     aria-invalid={errorObj?.isError ? 'true' : 'false'}
+                    aria-errormessage={errorObj?.isError ? `${inputFor}-errorMsg-id` : ''}
                 />
                 <button
                     ref={menuButtonRef}
@@ -136,7 +137,7 @@ export default function DropdownFieldset({ componentName, inputFor, buttonText, 
                     </ul>
                 }
             </fieldset>
-            {errorObj?.isError && <div className={styles.errorMsg}>{errorObj?.errorMsg}</div>}
+            {errorObj?.isError && <div id={`${inputFor}-errorMsg-id`} className={styles.errorMsg}>{errorObj?.errorMsg}</div>}
         </div>
     )
 }

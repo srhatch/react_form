@@ -19,7 +19,7 @@ export default function RadioInput({ componentName, inputFor, labelText, items }
         <div className={[styles.radioContainer, `${componentName}-radioContainer`].join(' ')}>
             <fieldset className={errorObj?.isError ? [styles.buttonContainer, 'errorOutline'].join(' ') : styles.buttonContainer}>
                 <label className={styles.radioLabel} htmlFor={`${inputFor}-hiddenInput`}>
-                    {labelText}{errorObj?.isError ? ' *' : ''}
+                    {labelText}
                 </label>
                 {
                     items?.map((item) => {
@@ -40,6 +40,7 @@ export default function RadioInput({ componentName, inputFor, labelText, items }
                     value={value?.value ?? ''}
                     aria-required='true'
                     aria-invalid={errorObj?.isError ? 'true' : 'false'}
+                    aria-errormessage={errorObj?.isError ? `${inputFor}-errorMsg-id` : ''}
                 />
             </fieldset>
             {errorObj?.isError && <div id={`${inputFor}-errorMsg-id`} className={styles.radioErrorMsg} role='alert'>{errorObj?.errorMsg}</div>}

@@ -98,7 +98,7 @@ export default function DropdownInput({ componentName, inputFor, items, labelTex
     return (
         <div className={[`${componentName}_${inputFor}InputDiv`, styles.dropdownContainer].join(' ')} data-testid='dropdown-container'>
             <label htmlFor={`${inputFor}Input-id`} className={styles.dropdownInputLabel}>
-                {labelText}{errorObj?.isError ? ' *' : ''}
+                {labelText}
             </label>
             <input
                 ref={inputRef}
@@ -120,6 +120,7 @@ export default function DropdownInput({ componentName, inputFor, items, labelTex
                 aria-autocomplete='list'
                 aria-required='true'
                 aria-invalid={errorObj?.isError ? 'true' : 'false'}
+                aria-errormessage={errorObj?.isError ? `${inputFor}-errorMsg-id` : ''}
             />
             <ul
                 id='dropdown-input-ul'
@@ -139,7 +140,7 @@ export default function DropdownInput({ componentName, inputFor, items, labelTex
                     </li>
                 )}
             </ul>
-            {errorObj?.isError && <div className={styles.incorrectInputErrorMsg}>{ errorObj?.errorMsg }</div>}
+            {errorObj?.isError && <div id={`${inputFor}-errorMsg-id`} className={styles.incorrectInputErrorMsg}>{ errorObj?.errorMsg }</div>}
         </div>
     )
 }
