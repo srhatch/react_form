@@ -22,6 +22,7 @@ export default function DateSelector({ children, componentName, inputFor, labelT
                 name={inputFor}
                 selected={valueObj?.value ?? ''}
                 onChange={(value: Date | null) => setValue(inputFor, value?.toString())}
+                autoComplete='off'
                 ariaRequired='true'
                 ariaInvalid={errorObj?.isError ? 'true' : 'false'}
                 ariaDescribedBy={errorObj?.isError ? `${inputFor}-errorMsg-id` : ''}
