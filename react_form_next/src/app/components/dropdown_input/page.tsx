@@ -57,9 +57,9 @@ export default function DropdownInput({ componentName, inputFor, items, labelTex
         listIndex.current = -1; // Reset so when the user starts deleting text the old index won't cause that <li> to highlight
     }
 
-    function handleReopenList(e: React.FocusEvent<HTMLInputElement>) {
+    function handleReopenList(e: React.FocusEvent<HTMLInputElement> | React.MouseEvent<HTMLInputElement>) {
         e.stopPropagation();
-        if (value?.length > 0) {
+        if (value?.value?.length > 0) {
             // Only open if text is present
             setIsListHidden(false);
         }
@@ -114,6 +114,7 @@ export default function DropdownInput({ componentName, inputFor, items, labelTex
                     handleTabNav(e);
                 }}
                 onFocus={handleReopenList}
+                onClick={handleReopenList}
                 role='combobox'
                 aria-controls='dropdown-input-ul'
                 aria-expanded={isListHidden ? 'false' : 'true'}
