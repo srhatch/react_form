@@ -49,9 +49,9 @@ class RegisterModel {
         if (emailAddress.includes('@')) {
             const emailArray = emailAddress.split('@');
             const domainRe = /^(?!.*[^\w\.-])/;
-            if (emailArray[0].length > 64) {
+            if (emailArray[0].length < 1 || emailArray[0].length > 64) {
                 isValid = false;
-            } else if (emailArray[1].length > 255 || !domainRe.test(emailArray[1])) {
+            } else if ((emailArray[1].length < 3 || emailArray[1].length > 255) || !domainRe.test(emailArray[1])) {
                 isValid = false;
             }
         } else {
