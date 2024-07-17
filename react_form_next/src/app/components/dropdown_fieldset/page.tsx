@@ -109,7 +109,7 @@ export default function DropdownFieldset({ componentName, inputFor, buttonText, 
                     aria-expanded={isListHidden ? 'false' : 'true'}
                     aria-controls='dropdown-ul'
                     aria-label={buttonText}
-                >{value?.value || buttonText}{errorObj?.isError ? ' *' : ''}</button>
+                >{value?.value || buttonText}</button>
                 {
                     !isListHidden &&
                     <ul
@@ -136,7 +136,7 @@ export default function DropdownFieldset({ componentName, inputFor, buttonText, 
                     </ul>
                 }
             </fieldset>
-            {errorObj?.isError && <div className='errorMsg'>{errorObj?.errorMsg}</div>}
+            {errorObj?.isError && <div className={styles.errorMsg}>{errorObj?.errorMsg}</div>}
         </div>
     )
 }
