@@ -30,7 +30,7 @@ class RegisterModel {
     checkMissing() {
         for (let prop in this) {
             if (!this[prop]?.value) {
-                this[prop].errors.push({isError: true});
+                this[prop].errors.push({isError: true, errorMsg: 'This field is required'});
             }
         }
     }
