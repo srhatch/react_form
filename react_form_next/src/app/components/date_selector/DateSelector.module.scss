@@ -2,7 +2,7 @@ $outline-color: rgb(135, 135, 255);
 $border-settings: 1px solid lightgray;
 .dateSelectorContainer {
     position: relative;
-    width: 6em;
+    width: 6.5em;
 }
 .dateSelectorLabel {
     display: block;
@@ -26,7 +26,8 @@ $border-settings: 1px solid lightgray;
     position: absolute;
     font-size: 0.75rem;
     text-align: center;
-    left: -4em;
+    left: -4.75em;
     top: 4.75em;
     width: 18em;
+    max-width: 30em;
 }
