@@ -22,11 +22,9 @@ $border-settings: 1px solid lightgray;
         border: 1px solid transparent;
     }
 }
-.dateErrorMsg {
+.dateSelectorErrorMsg {
     position: absolute;
     text-align: center;
     font-size: 0.75rem;
-    left: -4em;
-    top: 4em;
-    width: 17em;
+    width: max-content;
 }
