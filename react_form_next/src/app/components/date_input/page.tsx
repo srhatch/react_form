@@ -34,6 +34,8 @@ export default function DateInput({ componentName, inputFor, labelText, dateForm
             } else {
                 setValue(inputFor, inputValue);
             }
+        } else if (/[a-zA-Z]/.test(inputValue) === false) {
+            setValue(inputFor, inputValue);
         }
     }
 
