@@ -20,7 +20,7 @@ export default function TextInput({ componentName, inputFor, labelText, inputMod
             <label
                 htmlFor={`${baseIdentity}Id`}
                 className={labelClass}
-            >{labelText}{errorObj?.isError ? ' *' : ''}</label>
+            >{labelText}</label>
             <input
                 id={`${baseIdentity}Id`}
                 className={inputClass}
@@ -32,8 +32,9 @@ export default function TextInput({ componentName, inputFor, labelText, inputMod
                 onChange={handleInputChange}
                 aria-required='true'
                 aria-invalid={errorObj?.isError ? 'true' : 'false'}
+                aria-errormessage={errorObj?.isError ? `${inputFor}-errorMsg-id` : ''}
             ></input>
-            {errorObj?.isError && <div className={styles.textInputErrorMsg}>{errorObj?.errorMsg}</div>}
+            {errorObj?.isError && <div id={`${inputFor}-errorMsg-id`} className={styles.textInputErrorMsg} role='alert'>{errorObj?.errorMsg}</div>}
         </div>        
     )
 }
@@ -52,4 +53,3 @@ function generateLabelClass(baseIdentity: string) {
     const classes = [styles[baseClass], specificClass].join(' ');
     return classes;
 }
-
