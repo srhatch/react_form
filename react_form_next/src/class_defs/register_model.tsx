@@ -60,7 +60,7 @@ class RegisterModel {
         if (!isValid) {
             this.email.errors.push({
                 isError: true,
-                errorMsg: 'Email must be in correct format'
+                errorMsg: 'Email must be in correct format (username@domain)'
             });
         }
     }
