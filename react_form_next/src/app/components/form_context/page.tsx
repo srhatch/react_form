@@ -64,10 +64,11 @@ export default function ValidatingFormContext({ children, processSubmit, submitB
 
     return (
         <FormContext.Provider value={formMethods}>
-            <h1 className={styles.formHeading}>Example form</h1>
+            <h1 id='form-heading-id' className={styles.formHeading}>Example form</h1>
             <form
                 className={styles.form}
                 onSubmit={handleRegisterSubmit}
+                aria-labelledby='form-heading-id'
             >
                 {children}
                 <input type='submit' className={styles.submitButton} value={submitButtonValue} />
