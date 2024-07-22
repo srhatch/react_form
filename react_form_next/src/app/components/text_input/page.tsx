@@ -39,7 +39,7 @@ export default function TextInput({ componentName, inputFor, labelText, inputMod
     )
 }
 
-function generateInputClass(baseIdentity: string, isError: string | undefined) {
+function generateInputClass(baseIdentity: string, isError: boolean | undefined) {
     const baseInputClass = 'textInput'; // Used for input component styling
     const componentSpecificClass = `${baseIdentity}Input`; // Used for global styling (mainly positioning on page)
     const classArray = [styles[baseInputClass], componentSpecificClass];
