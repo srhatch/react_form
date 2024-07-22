@@ -1,6 +1,6 @@
 import styles from './DateInput.module.scss';
 import { DateInputProps } from '../../../types/interfaces';
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import { FormContext } from '../form_context/page';
 
 export default function DateInput({ componentName, inputFor, labelText, dateFormat }: DateInputProps) {
