@@ -11,28 +11,35 @@ export default function DateInput({ componentName, inputFor, labelText, dateForm
     function handleUserInput(e: React.UIEvent<HTMLInputElement, InputEvent>) {
         // Automatically inserts or deletes forward slashes as the user types
         let inputValue = (e.target as HTMLInputElement).value;
-        const inputType = e.nativeEvent.inputType;
-        if (inputType === 'insertText') {
-            // if /[0-9]/.test(inputValue[inputValue.length - 1])
-            // Runs if any number key is pressed
-            if (inputValue.length === 2 || inputValue.length === 5) {
-                // Automatically add a /
-                setValue(inputFor, (inputValue + '/'));
-            } else if (inputValue.length > 10) {
-                e.preventDefault(); // Maximum length reached, prevent any further keypresses
-            } else {
-                setValue(inputFor, inputValue);
+        switch(e.nativeEvent.inputType) {
+            case 'insertText': {
+                if (/[0-9]/.test(inputValue[inputValue.length - 1])) {
+                    // Prevent letter keys from being entered
+                    if (inputValue.length === 2 || inputValue.length === 5) {
+                        // Automatically add a '/'
+                        setValue(inputFor, (inputValue + '/'));
+                    } else if (inputValue.length > 10) {
+                        e.preventDefault(); // Maximum length reached, prevent any further keypresses
+                    } else {
+                        setValue(inputFor, inputValue);
+                    }
+                }
+                break;
             }
-        } else if (inputType === 'deleteContentBackward') {
-            // Deletes the slash automatically if deleting starts from from a '/'
-            if (inputValue.length === 5 || inputValue.length === 2) {
-                setValue(inputFor, (inputValue.substring(0, inputValue.length - 1)));
-            } else {
-                setValue(inputFor, inputValue);
+            case 'deleteContentBackward': {
+                // Deletes the slash automatically if deleting starts from from a '/'
+                if (inputValue.length === 5 || inputValue.length === 2) {
+                    setValue(inputFor, (inputValue.substring(0, inputValue.length - 1)));
+                } else {
+                    setValue(inputFor, inputValue);
+                }
+                break;
             }
-        } else if (inputType === 'insertFromPaste') {
-            // Handles copy pasting
-            setValue(inputFor, inputValue);
+            case 'insertFromPaste': {
+                // Handles copy pasting
+                setValue(inputFor, inputValue);
+                break;
+            }
         }
     }
 
