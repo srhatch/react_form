@@ -30,93 +30,66 @@ class RegisterModel {
     checkMissing() {
         for (let prop in this) {
             if (!this[prop]?.value) {
-                this[prop].errors.push({isError: true, errorMsg: 'This field is required'});
+                this.#setError(prop, 'This field is required');
             }
         }
     }
     checkUsernameFormat() {
         if (this.username?.value?.endsWith('.com')) {
-            this.username.errors.push({
-                isError: true,
-                errorMsg: 'Username cannot end with ".com"'
-            })
+            this.#setError('username', 'Username cannot end with ".com"');
         };
     }
     checkEmailFormat() {
         // Basic email address validation
         const emailAddress = this.email.value;
-        let isValid = true;
-        if (emailAddress.includes('@')) {
+        const errorMsg = 'Email must be in correct format (username@domain)';
+        if (!emailAddress.includes('@')) {
+            this.#setError('email', errorMsg);
+        } else {
             const emailArray = emailAddress.split('@');
             const domainRe = /^(?!.*[^\w\.-])/;
             if (emailArray[0].length < 1 || emailArray[0].length > 64) {
-                isValid = false;
+                this.#setError('email', errorMsg);
             } else if ((emailArray[1].length < 3 || emailArray[1].length > 255) || !domainRe.test(emailArray[1])) {
-                isValid = false;
+                this.#setError('email', errorMsg);
             }
-        } else {
-            isValid = false;
-        }
-        if (!isValid) {
-            this.email.errors.push({
-                isError: true,
-                errorMsg: 'Email must be in correct format (username@domain)'
-            });
         }
     }
     checkPasswordMatch() {
         if (this.password.value !== this.passwordConfirm.value) {
-            this.passwordConfirm.errors.push({
-                isError: true,
-                errorMsg: 'Passwords must match'
-            });
+            this.#setError('passwordConfirm', 'Passwords must match');
         }
     }
     checkPasswordLength() {
         if (this.password?.value?.length < 8) {
-            this.password.errors.push({
-                isError: true,
-                errorMsg: 'Password must be at least 8 characters'
-            });
+            this.#setError('password', 'Password must be at least 8 characters');
         }
     }
     checkDropdownInput(fullList: string[]) {
         // Pass in the list (array) that was passed to the dropdown input
         // Checks whether user input exists in that list
         if (this.state?.value && !fullList.includes(this.state?.value)) {
-            this.state.errors.push({
-                isError: true,
-                errorMsg: 'Please enter a valid state'
-            });
+            this.#setError('state', 'Please enter a valid state');
         }
     }
     checkDobLength() {
         // If date input is too short then it can't be valid
         if (this.dob?.value?.length < 10) {
-            this.dob.errors.push({
-                isError: true,
-                errorMsg: 'Please enter valid date (MM/DD/YYYY)'
-            });
+            this.#setError('dob', 'Please enter valid date (MM/DD/YYYY)');
         }
     }
     checkDobValid() {
-        const inputDate = this.makeDateObject('dob');
+        const inputDate = this.#makeDateObject('dob');
         const currentDate = new Date();
         if (currentDate < inputDate) {
-            this.dob.errors.push({
-                isError: true,
-                errorMsg: 'DOB must be before today'
-            });
+            this.#setError('dob', 'DOB must be before today');
         }
     }
     checkExpectedDateValid() {
         const currentDate = new Date();
         const expectedDate = new Date(this.expectedDate.value);
         if (currentDate > expectedDate) {
-            this.expectedDate.errors.push({
-                isError: true,
-                errorMsg: 'Expected date must be after today'
-            });
+            this.#setError('expectedDate', 'Expected date must be after today');
         }
     }
     validate() {
@@ -142,13 +115,19 @@ class RegisterModel {
         }
         return false;
     }
-    makeDateObject(dateProp: string) {
+    #makeDateObject(dateProp: string) {
         // Utility: convert date input string to a Date object
         const splitString = this[dateProp]?.value?.split('/');
         const reversedDateArray = splitString.reverse();
         const formattedDateString = reversedDateArray.join('-');
         const dateObj = new Date(formattedDateString);
         return dateObj;
+    }
+    #setError(propName: string, errorMsg: string) {
+        this[propName].errors.push({
+            isError: true,
+            errorMsg: errorMsg
+        })
     }
 }
 export default RegisterModel;
