@@ -15,7 +15,8 @@ export default function DateSelector({ children, componentName, inputFor, labelT
             <label
                 htmlFor={`${componentName}-${inputFor}Id`}
                 className={styles.dateSelectorLabel}
-            >{labelText}{children}</label>
+            >{labelText}</label>
+            {children}
             <DatePicker
                 id={`${componentName}-${inputFor}Id`}
                 className={errorObj?.isError ? [styles.dateSelectorInput, 'errorOutline'].join(' ') : styles.dateSelectorInput}
@@ -27,6 +28,7 @@ export default function DateSelector({ children, componentName, inputFor, labelT
                 ariaInvalid={errorObj?.isError ? 'true' : 'false'}
                 ariaDescribedBy={errorObj?.isError ? `${inputFor}-errorMsg-id` : ''}
             />
+            
             {errorObj?.isError && <div id={`${inputFor}-errorMsg-id`} className={styles.dateSelectorErrorMsg} role='alert'>{errorObj?.errorMsg}</div>}
         </div>
     )

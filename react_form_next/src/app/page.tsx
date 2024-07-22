@@ -78,7 +78,7 @@ export default function Register() {
           inputFor='expectedDate'
           labelText='Expected date'
         >
-          <Info infoContent='This is just an example of how this component might be used, hence the vague "expected date" name'/>
+          <Info forInput='expectedDate' infoContent='This is just an example of how this component might be used, hence the vague "expected date" name'/>
         </DateSelector>
     </ValidatingFormContext>
   )

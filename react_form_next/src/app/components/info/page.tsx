@@ -2,10 +2,10 @@ import styles from './Info.module.scss';
 import { useState } from 'react';
 import { InfoProps } from '../../../types/interfaces';
 
-export default function Info({ infoContent }: InfoProps) {
+export default function Info({ infoContent, forInput }: InfoProps) {
     const [infoHidden, setInfoHidden] = useState(true);
     return (
-        <span className={styles.infoContainer}>
+        <span className={[styles.infoContainer, `${forInput}-infoContainer`].join(' ')}>
             <button
                 type='button'
                 className={styles.infoButton}

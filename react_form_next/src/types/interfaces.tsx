@@ -63,4 +63,5 @@ export interface DateSelectorProps extends ComponentProps {
 // Info content interface
 export interface InfoProps {
     infoContent: string;
+    forInput: string;
 }
