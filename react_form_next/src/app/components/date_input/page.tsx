@@ -4,20 +4,16 @@ import { useState, useContext } from 'react';
 import { FormContext } from '../form_context/page';
 
 export default function DateInput({ componentName, inputFor, labelText, dateFormat }: DateInputProps) {
-    const [keyValue, setKeyValue] = useState('');
     const { getValue, setValue, getError } = useContext(FormContext);
     const value = getValue(inputFor);
     const errorObj = getError(value?.errors);
 
-    function handleGetKey(e: React.KeyboardEvent<HTMLInputElement>) {
-        // Gets the key string for handleUserInput (which is an onChange handler)
-        setKeyValue(e.key);
-    }
-
-    function handleUserInput(e: React.ChangeEvent) {
+    function handleUserInput(e: React.UIEvent<HTMLInputElement, InputEvent>) {
         // Automatically inserts or deletes forward slashes as the user types
         let inputValue = (e.target as HTMLInputElement).value;
-        if (/[0-9]/.test(keyValue)) {
+        const inputType = e.nativeEvent.inputType;
+        if (inputType === 'insertText') {
+            // if /[0-9]/.test(inputValue[inputValue.length - 1])
             // Runs if any number key is pressed
             if (inputValue.length === 2 || inputValue.length === 5) {
                 // Automatically add a /
@@ -27,14 +23,15 @@ export default function DateInput({ componentName, inputFor, labelText, dateForm
             } else {
                 setValue(inputFor, inputValue);
             }
-        } else if (keyValue === 'Backspace') {
+        } else if (inputType === 'deleteContentBackward') {
             // Deletes the slash automatically if deleting starts from from a '/'
             if (inputValue.length === 5 || inputValue.length === 2) {
                 setValue(inputFor, (inputValue.substring(0, inputValue.length - 1)));
             } else {
                 setValue(inputFor, inputValue);
             }
-        } else if (/[a-zA-Z]/.test(inputValue) === false) {
+        } else if (inputType === 'insertFromPaste') {
+            // Handles copy pasting
             setValue(inputFor, inputValue);
         }
     }
@@ -55,8 +52,7 @@ export default function DateInput({ componentName, inputFor, labelText, dateForm
                 value={value?.value ?? ''}
                 maxLength={12}
                 placeholder={dateFormat}
-                onKeyDown={handleGetKey}
-                onChange={handleUserInput}
+                onInput={handleUserInput}
                 aria-required='true'
                 aria-invalid={errorObj?.isError ? 'true' : 'false'}
                 aria-errormessage={errorObj?.isError ? `${inputFor}-errorMsg-id` : ''}
