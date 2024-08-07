@@ -40,7 +40,7 @@ export default function DropdownFieldset({ componentName, inputFor, buttonText, 
                 document.addEventListener('click', cachedClickCloseEvent);
                 document.addEventListener('keydown', cachedEscCloseList);
             }
-        }, [isListHidden])
+        }, [isListHidden, cachedClickCloseEvent, cachedEscCloseList])
 
     function handleMenuClick(e: React.MouseEvent<HTMLButtonElement>) {
             setIsListHidden(v => !v);

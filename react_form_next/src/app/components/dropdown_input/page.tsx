@@ -37,7 +37,7 @@ export default function DropdownInput({ componentName, inputFor, items, labelTex
             document.addEventListener('click', cachedClickCloseItemList);
             document.addEventListener('keydown', cachedEscCloseItemList);
         }
-    }, [isListHidden])
+    }, [isListHidden, cachedClickCloseItemList, cachedEscCloseItemList])
 
     function handleUserInput(e: React.ChangeEvent<HTMLInputElement>) {
         e.target.value.length > 0 ? setIsListHidden(false) : setIsListHidden(true); // Display the list if the user types anything
