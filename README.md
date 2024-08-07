@@ -13,8 +13,8 @@ The form component can interface with code to check validity (in this example a 
 }\ 
 
 interface ErrorObject {\
-    errorFor: string;\
-    errorMsg: string;\
+&nbsp;&nbsp;&nbsp;&nbsp;errorFor: string;\
+&nbsp;&nbsp;&nbsp;&nbsp;errorMsg: string;\
 }\ </code>
 
 This is the shape that the form component's "inputValues" state variable will take (an object in which each property is an InputObject).
