@@ -7,7 +7,7 @@ The input components are agnostic about what their purpose is. This is decided i
 
 The form component can interface with code to check validity (in this example a class is used to represent form values). Whatever structure that validity-checking code takes, it must work with and return objects in a specific shape, in this example defined by the following two Typescript interfaces:
 
-`interface InputObject {\
+<code>interface InputObject {\
     value: string;\
     errors: ErrorObject[];\
 }\
@@ -15,7 +15,7 @@ The form component can interface with code to check validity (in this example a 
 interface ErrorObject {\
     errorFor: string;\
     errorMsg: string;\
-}\`
+}\</code>
 
 This is the shape that the form component's "inputValues" state variable will take (an object in which each property is an InputObject).
 This shape ensures that error information is paired with the input value that caused it. errorFor specifies what kind of error is occurring, and errorMsg is the actual UI message to be displayed (left empty if the error doesn't need a message).
