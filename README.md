@@ -10,9 +10,9 @@ The form component can interface with code to check validity (in this example a 
 <code>interface InputObject {\
     value: string;\
     errors: ErrorObject[];\
-}\
+}\</code>
 
-interface ErrorObject {\
+<code>interface ErrorObject {\
     errorFor: string;\
     errorMsg: string;\
 }\</code>
