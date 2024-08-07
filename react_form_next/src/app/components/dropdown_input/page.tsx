@@ -2,6 +2,7 @@ import styles from './DropdownInput.module.scss';
 import { DropdownInputProps } from '../../../types/interfaces';
 import { useState, useRef, useContext, useCallback, useEffect } from 'react';
 import { FormContext } from '../form_context/page';
+import useManageListeners from '@/app/manage_listeners';
 
 export default function DropdownInput({ componentName, inputFor, items, labelText }: DropdownInputProps) {
     const [isListHidden, setIsListHidden] = useState(true);
@@ -12,32 +13,42 @@ export default function DropdownInput({ componentName, inputFor, items, labelTex
     const { getValue, setValue, getError } = useContext(FormContext);
     const value = getValue(inputFor);
     const errorObj = getError(value?.errors);
+    const [addListeners, removeListeners] = useManageListeners();
 
-    const cachedClickCloseItemList = useCallback((e: MouseEvent): void => {
-        // To make the menu close by clicking outside its area
-        if (!itemListRef.current?.contains(e.target as Node) && !inputRef.current?.contains(e.target as Node)) {
-            // If click is outside both the menu or (logically AND) the input element, close the menu
+    const cachedClickCloseItemList = useCallback(
+        (e: Event): void => {
+            // To make the menu close by clicking outside its area
+            if (!itemListRef.current) {
+                removeListeners(['cachedClickCloseItemList', 'cachedEscCloseItemList']);
+            } else if (!itemListRef.current?.contains(e.target as Node) && !inputRef.current?.contains(e.target as Node)) {
+                // If click is outside both the menu or (logically AND) the input element, close the menu
                 setIsListHidden(true);
-                document.removeEventListener('click', cachedClickCloseItemList);
-        }
-    }, [itemListRef, setIsListHidden])
+                removeListeners(['cachedClickCloseItemList', 'cachedEscCloseItemList']);
+            }
+        }, [itemListRef, setIsListHidden, removeListeners]
+    )
 
     const cachedEscCloseItemList = useCallback(
         // Close with Escape key
-        (e: KeyboardEvent): void => {
-            if (e.key === 'Escape') {
+        (e: Event): void => {
+            if (!itemListRef) {
+                removeListeners(['cachedClickCloseItemList', 'cachedEscCloseItemList']);
+            } else if ((e as KeyboardEvent).key === 'Escape') {
                 setIsListHidden(true);
-                document.removeEventListener('keydown', cachedEscCloseItemList);
+                removeListeners(['cachedClickCloseItemList', 'cachedEscCloseItemList']);
             }
-        }, [itemListRef, setIsListHidden])
+        }, [itemListRef, setIsListHidden, removeListeners]
+    )
 
     useEffect(() => {
         if (!isListHidden) {
             // Add listeners if menu is visible
-            document.addEventListener('click', cachedClickCloseItemList);
-            document.addEventListener('keydown', cachedEscCloseItemList);
+            addListeners([
+                {name: 'cachedClickCloseItemList', eventType: 'click', callback: cachedClickCloseItemList, useCapture: false},
+                {name: 'cachedEscCloseItemList', eventType: 'keydown', callback: cachedEscCloseItemList, useCapture: false}
+            ]);
         }
-    }, [isListHidden, cachedClickCloseItemList, cachedEscCloseItemList])
+    }, [isListHidden, cachedClickCloseItemList, cachedEscCloseItemList, addListeners])
 
     function handleUserInput(e: React.ChangeEvent<HTMLInputElement>) {
         e.target.value.length > 0 ? setIsListHidden(false) : setIsListHidden(true); // Display the list if the user types anything

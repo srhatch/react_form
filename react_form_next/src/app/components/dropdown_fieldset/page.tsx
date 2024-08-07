@@ -24,7 +24,7 @@ export default function DropdownFieldset({ componentName, inputFor, buttonText, 
                 setIsListHidden(true);
                 removeListeners(['cachedClickCloseEvent', 'cachedEscCloseList']);
             }
-        }, [itemListRef, setIsListHidden])
+        }, [itemListRef, setIsListHidden, removeListeners])
 
     const cachedEscCloseList = useCallback(
         (e: Event) => {
@@ -36,7 +36,7 @@ export default function DropdownFieldset({ componentName, inputFor, buttonText, 
                 setIsListHidden(true);
                 removeListeners(['cachedClickCloseEvent', 'cachedEscCloseList']);
             }
-        }, [itemListRef, setIsListHidden])
+        }, [itemListRef, setIsListHidden, removeListeners])
 
         useEffect(() => {
             if (!isListHidden) {
@@ -46,7 +46,7 @@ export default function DropdownFieldset({ componentName, inputFor, buttonText, 
                     {name: 'cachedEscCloseList', eventType: 'keydown', callback: cachedEscCloseList, useCapture: false}
                 ])
             }
-        }, [isListHidden, cachedClickCloseEvent, cachedEscCloseList])
+        }, [isListHidden, cachedClickCloseEvent, cachedEscCloseList, addListeners])
 
     function handleMenuClick(e: React.MouseEvent<HTMLButtonElement>) {
             setIsListHidden(v => !v);
