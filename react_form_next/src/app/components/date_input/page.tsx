@@ -1,5 +1,5 @@
 import styles from './DateInput.module.scss';
-import { DateInputProps } from '../../../types/interfaces';
+import { DateInputProps } from '@/types/interfaces';
 import { useContext } from 'react';
 import { FormContext } from '../form_context/page';
 

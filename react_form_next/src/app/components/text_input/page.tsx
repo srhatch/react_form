@@ -1,6 +1,6 @@
 import styles from './TextInput.module.scss'; // For text input styles
 import { useContext } from 'react';
-import { TextInputProps } from '../../../types/interfaces';
+import { TextInputProps } from '@/types/interfaces';
 import { FormContext } from '../form_context/page';
 
 export default function TextInput({ componentName, inputFor, labelText, inputMode, isPassword}: TextInputProps) {

@@ -1,6 +1,6 @@
 import styles from './Info.module.scss';
 import { useState } from 'react';
-import { InfoProps } from '../../../types/interfaces';
+import { InfoProps } from '@/types/interfaces';
 
 export default function Info({ infoContent, forInput }: InfoProps) {
     const [infoHidden, setInfoHidden] = useState(true);

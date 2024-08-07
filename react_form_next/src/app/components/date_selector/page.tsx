@@ -3,7 +3,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from 'react-datepicker';
 import { useContext } from 'react';
 import { FormContext } from '../form_context/page';
-import { DateSelectorProps } from '../../../types/interfaces';
+import { DateSelectorProps } from '@/types/interfaces';
 
 export default function DateSelector({ children, componentName, inputFor, labelText }: DateSelectorProps) {
     const { getValue, setValue, getError } = useContext(FormContext);

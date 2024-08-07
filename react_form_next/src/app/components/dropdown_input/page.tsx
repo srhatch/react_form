@@ -1,5 +1,5 @@
 import styles from './DropdownInput.module.scss';
-import { DropdownInputProps } from '../../../types/interfaces';
+import { DropdownInputProps } from '@/types/interfaces';
 import { useState, useRef, useContext, useCallback, useEffect } from 'react';
 import { FormContext } from '../form_context/page';
 import useManageListeners from '@/app/manage_listeners';
