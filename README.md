@@ -10,12 +10,12 @@ The form component can interface with code to check validity (in this example a 
 <code>interface InputObject {\
     value: string;\
     errors: ErrorObject[];\
-}\</code>
+}\ 
 
-<code>interface ErrorObject {\
+interface ErrorObject {\
     errorFor: string;\
     errorMsg: string;\
-}\</code>
+}\ </code>
 
 This is the shape that the form component's "inputValues" state variable will take (an object in which each property is an InputObject).
 This shape ensures that error information is paired with the input value that caused it. errorFor specifies what kind of error is occurring, and errorMsg is the actual UI message to be displayed (left empty if the error doesn't need a message).
