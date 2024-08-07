@@ -65,3 +65,16 @@ export interface InfoProps {
     infoContent: string;
     forInput: string;
 }
+
+// useManageListeners types
+export interface EventListenerObj {
+    eventType: string;
+    callback: (e: Event) => void;
+    useCapture: boolean;
+}
+
+export interface EventListenerObjParam extends EventListenerObj {
+    name: string;
+}
+
+export type EventStore = {[index: string]: EventListenerObj};

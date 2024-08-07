@@ -1,7 +1,8 @@
 import styles from './DropdownFieldset.module.scss';
-import { DropdownFieldsetProps } from '../../../types/interfaces';
+import { DropdownFieldsetProps } from '@/types/interfaces';
 import { useState, useRef, useContext, useCallback, useEffect } from 'react';
 import { FormContext } from '../form_context/page';
+import useManageListeners from '@/app/manage_listeners';
 
 export default function DropdownFieldset({ componentName, inputFor, buttonText, items }: DropdownFieldsetProps) {
     const [isListHidden, setIsListHidden] = useState(true);
@@ -11,34 +12,39 @@ export default function DropdownFieldset({ componentName, inputFor, buttonText, 
     const { getValue, setValue, getError } = useContext(FormContext);
     const value = getValue(inputFor);
     const errorObj = getError(value?.errors);
+    const [addListeners, removeListeners] = useManageListeners();
 
     const cachedClickCloseEvent = useCallback(
-        (e: MouseEvent): void => {
-            // Close the menu if user clicks outside
-            if (!itemListRef.current?.contains(e.target as Node) && !menuButtonRef.current?.contains(e.target as Node)) { 
-                    setIsListHidden(true);
-                    document.removeEventListener('click', cachedClickCloseEvent)
+        (e: Event): void => {
+            if (!itemListRef.current) {
+                // Removes listeners if page is navigated away
+                removeListeners(['cachedClickCloseEvent', 'cachedEscCloseList']);
+            } else if (!itemListRef.current?.contains(e.target as Node) && !menuButtonRef.current?.contains(e.target as Node)) { 
+                // Close the menu if user clicks outside
+                setIsListHidden(true);
+                removeListeners(['cachedClickCloseEvent', 'cachedEscCloseList']);
             }
         }, [itemListRef, setIsListHidden])
 
     const cachedEscCloseList = useCallback(
-        (e: KeyboardEvent) => {
-            // Close menu if Escape key is pressed
-            if (itemListRef.current) {
-                if (e.key === 'Escape') {
-                    setIsListHidden(true);
-                    document.removeEventListener('keydown', cachedEscCloseList);
-                }
-            } else {
-                document.removeEventListener('keydown', cachedEscCloseList);
+        (e: Event) => {
+            if (!itemListRef.current) {
+                // Removes listeners if page is navigated away
+                removeListeners(['cachedClickCloseEvent', 'cachedEscCloseList']);
+            } else if ((e as KeyboardEvent).key === 'Escape') {
+                // Close menu if Escape key is pressed
+                setIsListHidden(true);
+                removeListeners(['cachedClickCloseEvent', 'cachedEscCloseList']);
             }
         }, [itemListRef, setIsListHidden])
 
         useEffect(() => {
             if (!isListHidden) {
                 // Add closing listeners if menu is open
-                document.addEventListener('click', cachedClickCloseEvent);
-                document.addEventListener('keydown', cachedEscCloseList);
+                addListeners([
+                    {name: 'cachedClickCloseEvent', eventType: 'click', callback: cachedClickCloseEvent, useCapture: false},
+                    {name: 'cachedEscCloseList', eventType: 'keydown', callback: cachedEscCloseList, useCapture: false}
+                ])
             }
         }, [isListHidden, cachedClickCloseEvent, cachedEscCloseList])
 
