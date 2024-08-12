@@ -25,6 +25,8 @@ I changed the structure so that the ValidatingForm component can take in a funct
 Change to reducer-form-functions branch to see the ValidatingForm component used with a reducer.
 <br><br>
 Functionality can be examined by running the next dev server:<br>
+Install Node.js<br>
+Clone repository<br>
 Change directory to react_form_next<br>
 Run command: <code>npm install</code><br>
 Run command <code>npm run dev</code>
